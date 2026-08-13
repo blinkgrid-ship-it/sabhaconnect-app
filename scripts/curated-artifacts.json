@@ -1,0 +1,145 @@
+{
+  "_comment": [
+    "The curated list is the core mechanism of the artifact-of-the-day",
+    "(GHS_ProductArchitecture.md §14.3): Wikipedia has no queryable 'biblical",
+    "artifact' feed, so we maintain this list and grow it over time.",
+    "",
+    "GUARDRAIL — every entry is a place, object, inscription or structure.",
+    "Never Christ, never an apostle, never any person. The ArtifactKind union in",
+    "src/types/models.ts has no 'person' member, so a violating entry fails the",
+    "build rather than reaching a member.",
+    "",
+    "`title` is the exact Wikipedia article title used by the REST summary API.",
+    "Run: npm run seed:artifacts"
+  ],
+  "artifacts": [
+    {
+      "id": "pool-of-siloam",
+      "title": "Pool of Siloam",
+      "kind": "place",
+      "location": "Jerusalem",
+      "period": "8th century BC",
+      "bibleRefs": ["John 9:1-11", "Isaiah 8:6", "Nehemiah 3:15"]
+    },
+    {
+      "id": "tel-dan-stele",
+      "title": "Tel Dan stele",
+      "kind": "inscription",
+      "location": "Tel Dan, northern Israel",
+      "period": "9th century BC",
+      "bibleRefs": ["2 Samuel 7:16", "1 Kings 15:20"]
+    },
+    {
+      "id": "siloam-inscription",
+      "title": "Siloam inscription",
+      "kind": "inscription",
+      "location": "Jerusalem",
+      "period": "c. 700 BC",
+      "bibleRefs": ["2 Kings 20:20", "2 Chronicles 32:30"]
+    },
+    {
+      "id": "hezekiahs-tunnel",
+      "title": "Siloam tunnel",
+      "kind": "structure",
+      "location": "Jerusalem",
+      "period": "c. 700 BC",
+      "bibleRefs": ["2 Kings 20:20", "2 Chronicles 32:2-4"]
+    },
+    {
+      "id": "mesha-stele",
+      "title": "Mesha Stele",
+      "kind": "inscription",
+      "location": "Dhiban, Jordan",
+      "period": "c. 840 BC",
+      "bibleRefs": ["2 Kings 3:4-27"]
+    },
+    {
+      "id": "cyrus-cylinder",
+      "title": "Cyrus Cylinder",
+      "kind": "object",
+      "location": "Babylon",
+      "period": "539 BC",
+      "bibleRefs": ["Ezra 1:1-4", "Isaiah 44:28"]
+    },
+    {
+      "id": "taylor-prism",
+      "title": "Sennacherib's Annals",
+      "kind": "object",
+      "location": "Nineveh",
+      "period": "c. 690 BC",
+      "bibleRefs": ["2 Kings 18:13-17", "Isaiah 36:1"]
+    },
+    {
+      "id": "lachish-reliefs",
+      "title": "Lachish reliefs",
+      "kind": "object",
+      "location": "Nineveh",
+      "period": "c. 700 BC",
+      "bibleRefs": ["2 Kings 18:14", "2 Chronicles 32:9"]
+    },
+    {
+      "id": "dead-sea-scrolls",
+      "title": "Dead Sea Scrolls",
+      "kind": "object",
+      "location": "Qumran",
+      "period": "3rd century BC – 1st century AD",
+      "bibleRefs": ["Isaiah 40:8"]
+    },
+    {
+      "id": "ketef-hinnom-scrolls",
+      "title": "Ketef Hinnom",
+      "kind": "object",
+      "location": "Jerusalem",
+      "period": "c. 600 BC",
+      "bibleRefs": ["Numbers 6:24-26"]
+    },
+    {
+      "id": "merneptah-stele",
+      "title": "Merneptah Stele",
+      "kind": "inscription",
+      "location": "Thebes, Egypt",
+      "period": "c. 1208 BC",
+      "bibleRefs": ["Joshua 1:2-4"]
+    },
+    {
+      "id": "jacobs-well",
+      "title": "Jacob's Well",
+      "kind": "place",
+      "location": "Nablus, West Bank",
+      "period": "Antiquity",
+      "bibleRefs": ["John 4:5-6"]
+    },
+    {
+      "id": "capernaum-synagogue",
+      "title": "Capernaum",
+      "kind": "place",
+      "location": "Galilee",
+      "period": "4th century AD (over 1st century foundations)",
+      "bibleRefs": ["Mark 1:21", "Luke 7:5", "John 6:59"]
+    },
+    {
+      "id": "herodium",
+      "title": "Herodium",
+      "kind": "structure",
+      "location": "Judaean Desert",
+      "period": "23–15 BC",
+      "bibleRefs": ["Matthew 2:1"]
+    },
+    {
+      "id": "western-wall",
+      "title": "Western Wall",
+      "kind": "structure",
+      "location": "Jerusalem",
+      "period": "19 BC",
+      "bibleRefs": ["Mark 13:1-2", "Luke 21:5-6"]
+    },
+    {
+      "id": "megiddo",
+      "title": "Tel Megiddo",
+      "kind": "place",
+      "location": "Jezreel Valley",
+      "period": "Bronze and Iron Age",
+      "bibleRefs": ["1 Kings 9:15", "2 Kings 23:29", "Revelation 16:16"]
+    }
+  ]
+}

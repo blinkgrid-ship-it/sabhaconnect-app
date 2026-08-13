@@ -1,0 +1,335 @@
+[
+  {
+    "id": "capernaum-synagogue",
+    "name": "Capernaum",
+    "kind": "place",
+    "blurb": "Capernaum was a fishing village established during the time of the Hasmoneans in Israel, located on the northern shore of the Sea of Galilee. It had a population of about 1,500 in the 1st century AD. Archaeological excavations have revealed two ancient synagogues built successively at the same spot.",
+    "imageUrl": "/artifacts/capernaum-synagogue.jpg",
+    "imageReview": {
+      "status": "approved",
+      "reviewedBy": "Build review (Claude Code)",
+      "reviewedAt": "2026-08-13",
+      "note": "Viewed in full. Depicts no person — stone, inscription, ruin, map or aerial site only."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Capernaum",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "Mark 1:21",
+      "Luke 7:5",
+      "John 6:59"
+    ],
+    "location": "Galilee",
+    "period": "4th century AD (over 1st century foundations)"
+  },
+  {
+    "id": "cyrus-cylinder",
+    "name": "Cyrus Cylinder",
+    "kind": "object",
+    "blurb": "The Cyrus Cylinder is an ancient clay cylinder, now broken into several pieces, on which is written an Achaemenid royal inscription in Akkadian cuneiform script in the name of the Persian king Cyrus the Great. It dates from the 6th century BC and was discovered in the ruins of the ancient Mesopotamian city of Babylon in 1879.",
+    "imageUrl": "/artifacts/cyrus-cylinder.jpg",
+    "imageReview": {
+      "status": "approved",
+      "reviewedBy": "Build review (Claude Code)",
+      "reviewedAt": "2026-08-13",
+      "note": "Viewed in full. Depicts no person — stone, inscription, ruin, map or aerial site only."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Cyrus_Cylinder",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "Ezra 1:1-4",
+      "Isaiah 44:28"
+    ],
+    "location": "Babylon",
+    "period": "539 BC"
+  },
+  {
+    "id": "dead-sea-scrolls",
+    "name": "Dead Sea Scrolls",
+    "kind": "object",
+    "blurb": "The Dead Sea Scrolls (DSS), in the narrow sense identical with the Qumran Caves Scrolls, are a set of ancient Jewish biblical manuscripts from the Second Temple period. They were discovered over a period of ten years, between 1946 and 1956, at the Qumran Caves near Ein Feshkha in the West Bank, on the northern shore of the Dead Sea.",
+    "imageUrl": null,
+    "imageReview": {
+      "status": "pending",
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "note": "Awaiting human confirmation that the image depicts no person."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Dead_Sea_Scrolls",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "Isaiah 40:8"
+    ],
+    "location": "Qumran",
+    "period": "3rd century BC – 1st century AD"
+  },
+  {
+    "id": "herodium",
+    "name": "Herodium",
+    "kind": "structure",
+    "blurb": "The Herodeion, in Latin: Herodium, in Modern Hebrew: הרודיון Herodion, known in Arabic as Jabal al-Fureidis is a fortified desert palace built by Herod the Great, king of Judaea, in the first century BCE.",
+    "imageUrl": "/artifacts/herodium.jpg",
+    "imageReview": {
+      "status": "approved",
+      "reviewedBy": "Build review (Claude Code)",
+      "reviewedAt": "2026-08-13",
+      "note": "Viewed in full. Depicts no person — stone, inscription, ruin, map or aerial site only."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Herodium",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "Matthew 2:1"
+    ],
+    "location": "Judaean Desert",
+    "period": "23–15 BC"
+  },
+  {
+    "id": "hezekiahs-tunnel",
+    "name": "Siloam tunnel",
+    "kind": "structure",
+    "blurb": "The newer Siloam Tunnel, also known as Hezekiah's Tunnel, is a water tunnel that was carved within the City of David in ancient times, now located in the Arab neighborhood of Silwan in eastern Jerusalem.",
+    "imageUrl": "/artifacts/hezekiahs-tunnel.jpg",
+    "imageReview": {
+      "status": "approved",
+      "reviewedBy": "Build review (Claude Code)",
+      "reviewedAt": "2026-08-13",
+      "note": "Viewed in full. Depicts no person — stone, inscription, ruin, map or aerial site only."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Siloam_tunnel",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "2 Kings 20:20",
+      "2 Chronicles 32:2-4"
+    ],
+    "location": "Jerusalem",
+    "period": "c. 700 BC"
+  },
+  {
+    "id": "jacobs-well",
+    "name": "Jacob's Well",
+    "kind": "place",
+    "blurb": "Jacob's Well, also known as Jacob's Fountain or the Well of Sychar, is a Christian holy site located in Balata village, a suburb of the Palestinian city of Nablus in the West Bank.",
+    "imageUrl": "/artifacts/jacobs-well.jpg",
+    "imageReview": {
+      "status": "pending",
+      "reviewedBy": "Build review (Claude Code)",
+      "reviewedAt": "2026-08-13",
+      "note": "The crypt interior is lined with icons depicting haloed figures. Withheld under \"never depict\"."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Jacob's_Well",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "John 4:5-6"
+    ],
+    "location": "Nablus, West Bank",
+    "period": "Antiquity"
+  },
+  {
+    "id": "ketef-hinnom-scrolls",
+    "name": "Ketef Hinnom",
+    "kind": "object",
+    "blurb": "Ketef Hinnom is an archaeological site discovered in the 1970s southwest of the Old City of Jerusalem. Archaeological excavations held at the site uncovered a series of Iron Age period Judahite burial chambers, dating to the 7th and 6th centuries BCE.",
+    "imageUrl": "/artifacts/ketef-hinnom-scrolls.jpg",
+    "imageReview": {
+      "status": "approved",
+      "reviewedBy": "Build review (Claude Code)",
+      "reviewedAt": "2026-08-13",
+      "note": "Viewed in full. Depicts no person — stone, inscription, ruin, map or aerial site only."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Ketef_Hinnom",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "Numbers 6:24-26"
+    ],
+    "location": "Jerusalem",
+    "period": "c. 600 BC"
+  },
+  {
+    "id": "lachish-reliefs",
+    "name": "Lachish reliefs",
+    "kind": "object",
+    "blurb": "The Lachish reliefs are a set of Assyrian palace reliefs narrating the story of the Assyrian victory over the kingdom of Judah during the siege of Lachish in 701 BC. Carved between 700 and 681 BC, as a decoration of the South-West Palace of Sennacherib in Nineveh, the relief is today in the British Museum in London, and was included as it…",
+    "imageUrl": "/artifacts/lachish-reliefs.jpg",
+    "imageReview": {
+      "status": "pending",
+      "reviewedBy": "Build review (Claude Code)",
+      "reviewedAt": "2026-08-13",
+      "note": "The relief carving depicts human figures. Withheld under \"never depict\"."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Lachish_reliefs",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "2 Kings 18:14",
+      "2 Chronicles 32:9"
+    ],
+    "location": "Nineveh",
+    "period": "c. 700 BC"
+  },
+  {
+    "id": "megiddo",
+    "name": "Tel Megiddo",
+    "kind": "place",
+    "blurb": "Tel Megiddo is the site of the ancient city of Megiddo, the remains of which form a tell or archaeological mound, situated in northern Israel at the western edge of the Jezreel Valley. During the Bronze Age, Megiddo was an important Canaanite city-state, and in the Iron Age, it became a royal city in the Kingdom of Israel.",
+    "imageUrl": "/artifacts/megiddo.jpg",
+    "imageReview": {
+      "status": "approved",
+      "reviewedBy": "Build review (Claude Code)",
+      "reviewedAt": "2026-08-13",
+      "note": "Viewed in full. Depicts no person — stone, inscription, ruin, map or aerial site only."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Tel_Megiddo",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "1 Kings 9:15",
+      "2 Kings 23:29",
+      "Revelation 16:16"
+    ],
+    "location": "Jezreel Valley",
+    "period": "Bronze and Iron Age"
+  },
+  {
+    "id": "merneptah-stele",
+    "name": "Merneptah Stele",
+    "kind": "inscription",
+    "blurb": "The Merneptah Stele, also known as the Israel Stele or the Victory Stele of Merneptah, is an inscription by Merneptah, a pharaoh in ancient Egypt who reigned from 1213 to 1203 BCE. Discovered by Flinders Petrie at Thebes in 1896, it is now housed at the Egyptian Museum in Cairo.",
+    "imageUrl": "/artifacts/merneptah-stele.jpg",
+    "imageReview": {
+      "status": "pending",
+      "reviewedBy": "Build review (Claude Code)",
+      "reviewedAt": "2026-08-13",
+      "note": "The lunette at the top of the stele is a figural relief depicting persons. Withheld under \"never depict\"."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Merneptah_Stele",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "Joshua 1:2-4"
+    ],
+    "location": "Thebes, Egypt",
+    "period": "c. 1208 BC"
+  },
+  {
+    "id": "mesha-stele",
+    "name": "Mesha Stele",
+    "kind": "inscription",
+    "blurb": "The Mesha Stele, also known as the Moabite Stone, is a stele dated around 840 BCE containing a significant Canaanite inscription in the name of King Mesha of Moab. Mesha tells how Chemosh, the god of Moab, had been angry with his people and had allowed them to be subjugated to the Kingdom of Israel, but at length, Chemosh returned and ass…",
+    "imageUrl": "/artifacts/mesha-stele.jpg",
+    "imageReview": {
+      "status": "approved",
+      "reviewedBy": "Build review (Claude Code)",
+      "reviewedAt": "2026-08-13",
+      "note": "Viewed in full. Depicts no person — stone, inscription, ruin, map or aerial site only."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Mesha_Stele",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "2 Kings 3:4-27"
+    ],
+    "location": "Dhiban, Jordan",
+    "period": "c. 840 BC"
+  },
+  {
+    "id": "pool-of-siloam",
+    "name": "Pool of Siloam",
+    "kind": "place",
+    "blurb": "The term Pool of Siloam refers to several rock-cut pools located southeast of the walls of the Old City of Jerusalem. The pools were fed by the waters of the Gihon Spring, carried there by the Siloam tunnel.",
+    "imageUrl": "/artifacts/pool-of-siloam.png",
+    "imageReview": {
+      "status": "approved",
+      "reviewedBy": "Build review (Claude Code)",
+      "reviewedAt": "2026-08-13",
+      "note": "Viewed in full. Depicts no person — stone, inscription, ruin, map or aerial site only."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Pool_of_Siloam",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "John 9:1-11",
+      "Isaiah 8:6",
+      "Nehemiah 3:15"
+    ],
+    "location": "Jerusalem",
+    "period": "8th century BC"
+  },
+  {
+    "id": "siloam-inscription",
+    "name": "Siloam inscription",
+    "kind": "inscription",
+    "blurb": "The Siloam inscription, Silwan inscription or Shiloah inscription, known as KAI 189, is a Hebrew inscription found in the Siloam tunnel which brings water from the Gihon Spring to the Pool of Siloam, located in the City of David in East Jerusalem neighborhood of Silwan.",
+    "imageUrl": "/artifacts/siloam-inscription.jpg",
+    "imageReview": {
+      "status": "approved",
+      "reviewedBy": "Build review (Claude Code)",
+      "reviewedAt": "2026-08-13",
+      "note": "Viewed in full. Depicts no person — stone, inscription, ruin, map or aerial site only."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Siloam_inscription",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "2 Kings 20:20",
+      "2 Chronicles 32:30"
+    ],
+    "location": "Jerusalem",
+    "period": "c. 700 BC"
+  },
+  {
+    "id": "taylor-prism",
+    "name": "Sennacherib's Annals",
+    "kind": "object",
+    "blurb": "Sennacherib's Annals are the annals of Sennacherib, emperor of the Neo-Assyrian Empire. They are found inscribed on several artifacts, and the final versions were found in three clay prisms inscribed with the same text: the Taylor Prism is in the British Museum, the ISAC or Chicago Prism in the Institute for the Study of Ancient Cultures…",
+    "imageUrl": null,
+    "imageReview": {
+      "status": "pending",
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "note": "Awaiting human confirmation that the image depicts no person."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Sennacherib's_Annals",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "2 Kings 18:13-17",
+      "Isaiah 36:1"
+    ],
+    "location": "Nineveh",
+    "period": "c. 690 BC"
+  },
+  {
+    "id": "tel-dan-stele",
+    "name": "Tel Dan stele",
+    "kind": "inscription",
+    "blurb": "The Tel Dan Stele is a fragmentary stele with an Old Aramaic inscription written in the Phoenician script. It is generally dated to the 9th-century BCE, though some scholars have proposed later dates; it is one of the earliest, extra-biblical references to a Davidic dynasty.",
+    "imageUrl": "/artifacts/tel-dan-stele.jpg",
+    "imageReview": {
+      "status": "approved",
+      "reviewedBy": "Build review (Claude Code)",
+      "reviewedAt": "2026-08-13",
+      "note": "Viewed in full. Depicts no person — stone, inscription, ruin, map or aerial site only."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Tel_Dan_stele",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "2 Samuel 7:16",
+      "1 Kings 15:20"
+    ],
+    "location": "Tel Dan, northern Israel",
+    "period": "9th century BC"
+  },
+  {
+    "id": "western-wall",
+    "name": "Western Wall",
+    "kind": "structure",
+    "blurb": "The Western Wall is an ancient retaining wall of the built-up hill known to Jews and Christians as the Temple Mount of Jerusalem. Its most famous section, known by the same name, often shortened by Jews to the Kotel or Kosel, is known in the West as the Wailing Wall, and in the Arab world and Islamic world as the Buraq Wall.",
+    "imageUrl": null,
+    "imageReview": {
+      "status": "pending",
+      "reviewedBy": "",
+      "reviewedAt": "",
+      "note": "Awaiting human confirmation that the image depicts no person."
+    },
+    "sourceUrl": "https://en.wikipedia.org/wiki/Western_Wall",
+    "sourceLabel": "Wikipedia",
+    "bibleRefs": [
+      "Mark 13:1-2",
+      "Luke 21:5-6"
+    ],
+    "location": "Jerusalem",
+    "period": "19 BC"
+  }
+]

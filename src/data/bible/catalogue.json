@@ -1,0 +1,728 @@
+[
+  {
+    "id": "GEN",
+    "testament": "OT",
+    "order": 0,
+    "name": {
+      "en": "Genesis",
+      "ml": "ഉല്പ."
+    },
+    "chapterCount": 50,
+    "bundled": true
+  },
+  {
+    "id": "EXO",
+    "testament": "OT",
+    "order": 1,
+    "name": {
+      "en": "Exodus",
+      "ml": "പുറ."
+    },
+    "chapterCount": 40,
+    "bundled": true
+  },
+  {
+    "id": "LEV",
+    "testament": "OT",
+    "order": 2,
+    "name": {
+      "en": "Leviticus",
+      "ml": "ലേവ്യ."
+    },
+    "chapterCount": 27,
+    "bundled": true
+  },
+  {
+    "id": "NUM",
+    "testament": "OT",
+    "order": 3,
+    "name": {
+      "en": "Numbers",
+      "ml": "സംഖ്യ."
+    },
+    "chapterCount": 36,
+    "bundled": true
+  },
+  {
+    "id": "DEU",
+    "testament": "OT",
+    "order": 4,
+    "name": {
+      "en": "Deuteronomy",
+      "ml": "ആവർ."
+    },
+    "chapterCount": 34,
+    "bundled": true
+  },
+  {
+    "id": "JOS",
+    "testament": "OT",
+    "order": 5,
+    "name": {
+      "en": "Joshua",
+      "ml": "യോശു."
+    },
+    "chapterCount": 24,
+    "bundled": true
+  },
+  {
+    "id": "JDG",
+    "testament": "OT",
+    "order": 6,
+    "name": {
+      "en": "Judges",
+      "ml": "ന്യായാ."
+    },
+    "chapterCount": 21,
+    "bundled": true
+  },
+  {
+    "id": "RUT",
+    "testament": "OT",
+    "order": 7,
+    "name": {
+      "en": "Ruth",
+      "ml": "രൂത്ത്."
+    },
+    "chapterCount": 4,
+    "bundled": true
+  },
+  {
+    "id": "1SA",
+    "testament": "OT",
+    "order": 8,
+    "name": {
+      "en": "1 Samuel",
+      "ml": "1 ശമു."
+    },
+    "chapterCount": 31,
+    "bundled": true
+  },
+  {
+    "id": "2SA",
+    "testament": "OT",
+    "order": 9,
+    "name": {
+      "en": "2 Samuel",
+      "ml": "2 ശമു."
+    },
+    "chapterCount": 24,
+    "bundled": true
+  },
+  {
+    "id": "1KI",
+    "testament": "OT",
+    "order": 10,
+    "name": {
+      "en": "1 Kings",
+      "ml": "1 രാജാ."
+    },
+    "chapterCount": 22,
+    "bundled": true
+  },
+  {
+    "id": "2KI",
+    "testament": "OT",
+    "order": 11,
+    "name": {
+      "en": "2 Kings",
+      "ml": "2 രാജാ."
+    },
+    "chapterCount": 25,
+    "bundled": true
+  },
+  {
+    "id": "1CH",
+    "testament": "OT",
+    "order": 12,
+    "name": {
+      "en": "1 Chronicles",
+      "ml": "1 ദിന."
+    },
+    "chapterCount": 29,
+    "bundled": true
+  },
+  {
+    "id": "2CH",
+    "testament": "OT",
+    "order": 13,
+    "name": {
+      "en": "2 Chronicles",
+      "ml": "2 ദിന."
+    },
+    "chapterCount": 36,
+    "bundled": true
+  },
+  {
+    "id": "EZR",
+    "testament": "OT",
+    "order": 14,
+    "name": {
+      "en": "Ezra",
+      "ml": "എസ്രാ."
+    },
+    "chapterCount": 10,
+    "bundled": true
+  },
+  {
+    "id": "NEH",
+    "testament": "OT",
+    "order": 15,
+    "name": {
+      "en": "Nehemiah",
+      "ml": "നെഹെ."
+    },
+    "chapterCount": 13,
+    "bundled": true
+  },
+  {
+    "id": "EST",
+    "testament": "OT",
+    "order": 16,
+    "name": {
+      "en": "Esther",
+      "ml": "എസ്ഥേ."
+    },
+    "chapterCount": 10,
+    "bundled": true
+  },
+  {
+    "id": "JOB",
+    "testament": "OT",
+    "order": 17,
+    "name": {
+      "en": "Job",
+      "ml": "ഇയ്യോ."
+    },
+    "chapterCount": 42,
+    "bundled": true
+  },
+  {
+    "id": "PSA",
+    "testament": "OT",
+    "order": 18,
+    "name": {
+      "en": "Psalms",
+      "ml": "സങ്കീ."
+    },
+    "chapterCount": 150,
+    "bundled": true
+  },
+  {
+    "id": "PRO",
+    "testament": "OT",
+    "order": 19,
+    "name": {
+      "en": "Proverbs",
+      "ml": "സദൃ."
+    },
+    "chapterCount": 31,
+    "bundled": true
+  },
+  {
+    "id": "ECC",
+    "testament": "OT",
+    "order": 20,
+    "name": {
+      "en": "Ecclesiastes",
+      "ml": "സഭാ."
+    },
+    "chapterCount": 12,
+    "bundled": true
+  },
+  {
+    "id": "SNG",
+    "testament": "OT",
+    "order": 21,
+    "name": {
+      "en": "Song of Solomon",
+      "ml": "ഉത്ത."
+    },
+    "chapterCount": 8,
+    "bundled": true
+  },
+  {
+    "id": "ISA",
+    "testament": "OT",
+    "order": 22,
+    "name": {
+      "en": "Isaiah",
+      "ml": "യെശ."
+    },
+    "chapterCount": 66,
+    "bundled": true
+  },
+  {
+    "id": "JER",
+    "testament": "OT",
+    "order": 23,
+    "name": {
+      "en": "Jeremiah",
+      "ml": "യിരെ."
+    },
+    "chapterCount": 52,
+    "bundled": true
+  },
+  {
+    "id": "LAM",
+    "testament": "OT",
+    "order": 24,
+    "name": {
+      "en": "Lamentations",
+      "ml": "വിലാ."
+    },
+    "chapterCount": 5,
+    "bundled": true
+  },
+  {
+    "id": "EZK",
+    "testament": "OT",
+    "order": 25,
+    "name": {
+      "en": "Ezekiel",
+      "ml": "യെഹെ."
+    },
+    "chapterCount": 48,
+    "bundled": true
+  },
+  {
+    "id": "DAN",
+    "testament": "OT",
+    "order": 26,
+    "name": {
+      "en": "Daniel",
+      "ml": "ദാനീ."
+    },
+    "chapterCount": 12,
+    "bundled": true
+  },
+  {
+    "id": "HOS",
+    "testament": "OT",
+    "order": 27,
+    "name": {
+      "en": "Hosea",
+      "ml": "ഹോശേ."
+    },
+    "chapterCount": 14,
+    "bundled": true
+  },
+  {
+    "id": "JOL",
+    "testament": "OT",
+    "order": 28,
+    "name": {
+      "en": "Joel",
+      "ml": "യോവേ."
+    },
+    "chapterCount": 3,
+    "bundled": true
+  },
+  {
+    "id": "AMO",
+    "testament": "OT",
+    "order": 29,
+    "name": {
+      "en": "Amos",
+      "ml": "ആമോ."
+    },
+    "chapterCount": 9,
+    "bundled": true
+  },
+  {
+    "id": "OBA",
+    "testament": "OT",
+    "order": 30,
+    "name": {
+      "en": "Obadiah",
+      "ml": "ഓബ."
+    },
+    "chapterCount": 1,
+    "bundled": true
+  },
+  {
+    "id": "JON",
+    "testament": "OT",
+    "order": 31,
+    "name": {
+      "en": "Jonah",
+      "ml": "യോനാ."
+    },
+    "chapterCount": 4,
+    "bundled": true
+  },
+  {
+    "id": "MIC",
+    "testament": "OT",
+    "order": 32,
+    "name": {
+      "en": "Micah",
+      "ml": "മീഖാ."
+    },
+    "chapterCount": 7,
+    "bundled": true
+  },
+  {
+    "id": "NAM",
+    "testament": "OT",
+    "order": 33,
+    "name": {
+      "en": "Nahum",
+      "ml": "നഹൂം."
+    },
+    "chapterCount": 3,
+    "bundled": true
+  },
+  {
+    "id": "HAB",
+    "testament": "OT",
+    "order": 34,
+    "name": {
+      "en": "Habakkuk",
+      "ml": "ഹബ."
+    },
+    "chapterCount": 3,
+    "bundled": true
+  },
+  {
+    "id": "ZEP",
+    "testament": "OT",
+    "order": 35,
+    "name": {
+      "en": "Zephaniah",
+      "ml": "സെഫ."
+    },
+    "chapterCount": 3,
+    "bundled": true
+  },
+  {
+    "id": "HAG",
+    "testament": "OT",
+    "order": 36,
+    "name": {
+      "en": "Haggai",
+      "ml": "ഹഗ്ഗാ."
+    },
+    "chapterCount": 2,
+    "bundled": true
+  },
+  {
+    "id": "ZEC",
+    "testament": "OT",
+    "order": 37,
+    "name": {
+      "en": "Zechariah",
+      "ml": "സെഖ."
+    },
+    "chapterCount": 14,
+    "bundled": true
+  },
+  {
+    "id": "MAL",
+    "testament": "OT",
+    "order": 38,
+    "name": {
+      "en": "Malachi",
+      "ml": "മലാ."
+    },
+    "chapterCount": 4,
+    "bundled": true
+  },
+  {
+    "id": "MAT",
+    "testament": "NT",
+    "order": 39,
+    "name": {
+      "en": "Matthew",
+      "ml": "മത്താ."
+    },
+    "chapterCount": 28,
+    "bundled": true
+  },
+  {
+    "id": "MRK",
+    "testament": "NT",
+    "order": 40,
+    "name": {
+      "en": "Mark",
+      "ml": "മർക്കൊ."
+    },
+    "chapterCount": 16,
+    "bundled": true
+  },
+  {
+    "id": "LUK",
+    "testament": "NT",
+    "order": 41,
+    "name": {
+      "en": "Luke",
+      "ml": "ലൂക്കൊ."
+    },
+    "chapterCount": 24,
+    "bundled": true
+  },
+  {
+    "id": "JHN",
+    "testament": "NT",
+    "order": 42,
+    "name": {
+      "en": "John",
+      "ml": "യോഹ."
+    },
+    "chapterCount": 21,
+    "bundled": true
+  },
+  {
+    "id": "ACT",
+    "testament": "NT",
+    "order": 43,
+    "name": {
+      "en": "Acts",
+      "ml": "അപ്പൊ. പ്ര."
+    },
+    "chapterCount": 28,
+    "bundled": true
+  },
+  {
+    "id": "ROM",
+    "testament": "NT",
+    "order": 44,
+    "name": {
+      "en": "Romans",
+      "ml": "റോമ."
+    },
+    "chapterCount": 16,
+    "bundled": true
+  },
+  {
+    "id": "1CO",
+    "testament": "NT",
+    "order": 45,
+    "name": {
+      "en": "1 Corinthians",
+      "ml": "1 കൊരി."
+    },
+    "chapterCount": 16,
+    "bundled": true
+  },
+  {
+    "id": "2CO",
+    "testament": "NT",
+    "order": 46,
+    "name": {
+      "en": "2 Corinthians",
+      "ml": "2 കൊരി."
+    },
+    "chapterCount": 13,
+    "bundled": true
+  },
+  {
+    "id": "GAL",
+    "testament": "NT",
+    "order": 47,
+    "name": {
+      "en": "Galatians",
+      "ml": "ഗലാ."
+    },
+    "chapterCount": 6,
+    "bundled": true
+  },
+  {
+    "id": "EPH",
+    "testament": "NT",
+    "order": 48,
+    "name": {
+      "en": "Ephesians",
+      "ml": "എഫെ."
+    },
+    "chapterCount": 6,
+    "bundled": true
+  },
+  {
+    "id": "PHP",
+    "testament": "NT",
+    "order": 49,
+    "name": {
+      "en": "Philippians",
+      "ml": "ഫിലി."
+    },
+    "chapterCount": 4,
+    "bundled": true
+  },
+  {
+    "id": "COL",
+    "testament": "NT",
+    "order": 50,
+    "name": {
+      "en": "Colossians",
+      "ml": "കൊലൊ."
+    },
+    "chapterCount": 4,
+    "bundled": true
+  },
+  {
+    "id": "1TH",
+    "testament": "NT",
+    "order": 51,
+    "name": {
+      "en": "1 Thessalonians",
+      "ml": "1 തെസ്സ."
+    },
+    "chapterCount": 5,
+    "bundled": true
+  },
+  {
+    "id": "2TH",
+    "testament": "NT",
+    "order": 52,
+    "name": {
+      "en": "2 Thessalonians",
+      "ml": "2 തെസ്സ."
+    },
+    "chapterCount": 3,
+    "bundled": true
+  },
+  {
+    "id": "1TI",
+    "testament": "NT",
+    "order": 53,
+    "name": {
+      "en": "1 Timothy",
+      "ml": "1 തിമൊ."
+    },
+    "chapterCount": 6,
+    "bundled": true
+  },
+  {
+    "id": "2TI",
+    "testament": "NT",
+    "order": 54,
+    "name": {
+      "en": "2 Timothy",
+      "ml": "2 തിമൊ."
+    },
+    "chapterCount": 4,
+    "bundled": true
+  },
+  {
+    "id": "TIT",
+    "testament": "NT",
+    "order": 55,
+    "name": {
+      "en": "Titus",
+      "ml": "തീത്തൊ."
+    },
+    "chapterCount": 3,
+    "bundled": true
+  },
+  {
+    "id": "PHM",
+    "testament": "NT",
+    "order": 56,
+    "name": {
+      "en": "Philemon",
+      "ml": "ഫിലേ."
+    },
+    "chapterCount": 1,
+    "bundled": true
+  },
+  {
+    "id": "HEB",
+    "testament": "NT",
+    "order": 57,
+    "name": {
+      "en": "Hebrews",
+      "ml": "എബ്രാ."
+    },
+    "chapterCount": 13,
+    "bundled": true
+  },
+  {
+    "id": "JAS",
+    "testament": "NT",
+    "order": 58,
+    "name": {
+      "en": "James",
+      "ml": "യാക്കോ."
+    },
+    "chapterCount": 5,
+    "bundled": true
+  },
+  {
+    "id": "1PE",
+    "testament": "NT",
+    "order": 59,
+    "name": {
+      "en": "1 Peter",
+      "ml": "1 പത്രൊ."
+    },
+    "chapterCount": 5,
+    "bundled": true
+  },
+  {
+    "id": "2PE",
+    "testament": "NT",
+    "order": 60,
+    "name": {
+      "en": "2 Peter",
+      "ml": "2 പത്രൊ."
+    },
+    "chapterCount": 3,
+    "bundled": true
+  },
+  {
+    "id": "1JN",
+    "testament": "NT",
+    "order": 61,
+    "name": {
+      "en": "1 John",
+      "ml": "1 യോഹ."
+    },
+    "chapterCount": 5,
+    "bundled": true
+  },
+  {
+    "id": "2JN",
+    "testament": "NT",
+    "order": 62,
+    "name": {
+      "en": "2 John",
+      "ml": "2 യോഹ."
+    },
+    "chapterCount": 1,
+    "bundled": true
+  },
+  {
+    "id": "3JN",
+    "testament": "NT",
+    "order": 63,
+    "name": {
+      "en": "3 John",
+      "ml": "3 യോഹ."
+    },
+    "chapterCount": 1,
+    "bundled": true
+  },
+  {
+    "id": "JUD",
+    "testament": "NT",
+    "order": 64,
+    "name": {
+      "en": "Jude",
+      "ml": "യൂദാ."
+    },
+    "chapterCount": 1,
+    "bundled": true
+  },
+  {
+    "id": "REV",
+    "testament": "NT",
+    "order": 65,
+    "name": {
+      "en": "Revelation",
+      "ml": "വെളി."
+    },
+    "chapterCount": 22,
+    "bundled": true
+  }
+]

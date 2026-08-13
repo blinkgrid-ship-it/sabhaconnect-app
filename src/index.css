@@ -1,0 +1,172 @@
+/*
+ * Fonts are bundled via @fontsource rather than loaded from Google Fonts:
+ * the app has to run with no network, and a display face that silently falls
+ * back mid-pitch would undo the brand.
+ *
+ * Newsreader        — scripture, display, card titles
+ * DM Sans           — interface, metadata, comments
+ * JetBrains Mono    — overlines, verse numbers, counters
+ * Noto Serif Malayalam — Malayalam, paired with the serif English
+ */
+@import '@fontsource/newsreader/400.css';
+@import '@fontsource/newsreader/500.css';
+@import '@fontsource/newsreader/600.css';
+@import '@fontsource/newsreader/400-italic.css';
+@import '@fontsource/dm-sans/400.css';
+@import '@fontsource/dm-sans/500.css';
+@import '@fontsource/dm-sans/600.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/noto-serif-malayalam/400.css';
+@import '@fontsource/noto-serif-malayalam/600.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /*
+   * Default theme tokens. The active tenant overwrites these at boot via
+   * applyTheme() (GHS_ProductArchitecture.md §4) — they live here as well so
+   * the page is never unstyled during the first paint.
+   */
+  :root {
+    --ghs-sanctuary: 7 59 44;
+    --ghs-vespers: 11 62 56;
+    --ghs-cedar: 15 90 82;
+    --ghs-brass: 201 162 39;
+    --ghs-brass-ink: 185 138 30;
+    --ghs-lamp: 231 217 168;
+    --ghs-cream: 237 231 218;
+    --ghs-parchment: 246 241 231;
+    --ghs-vellum: 255 253 248;
+    --ghs-rule: 227 220 203;
+    --ghs-ink: 27 43 38;
+    --ghs-ink-muted: 90 104 98;
+    --ghs-ink-faint: 138 148 142;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream font-body text-ui text-ink antialiased;
+    font-feature-settings: 'kern' 1;
+    padding-top: env(safe-area-inset-top);
+  }
+
+  /*
+   * Malayalam: always 0.72× the English size, 1.75 leading. The ratio is a
+   * custom property so a component can set the English size once and the
+   * Malayalam line follows automatically.
+   */
+  :lang(ml) {
+    font-family: theme('fontFamily.malayalam');
+    font-size: 0.72em;
+    line-height: 1.75;
+  }
+
+  /* A visible, on-brand focus ring — the calm styling must not cost keyboard users. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brass ring-offset-2 ring-offset-parchment;
+  }
+
+  ::selection {
+    background-color: rgb(var(--ghs-lamp));
+    color: rgb(var(--ghs-ink));
+  }
+
+  /* Quiet, warm scrollbars — the rails and readers scroll a lot. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--ghs-rule)) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--ghs-rule));
+    border-radius: 99px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+}
+
+@layer components {
+  /*
+   * The card. One hairline border, effectively no shadow — depth comes from
+   * vellum sitting on parchment.
+   */
+  .ghs-card {
+    @apply rounded-card border border-rule bg-vellum shadow-card;
+  }
+
+  /* The section label: JetBrains Mono, uppercase, brass. */
+  .ghs-overline {
+    @apply font-overline text-overline uppercase text-brass-ink;
+  }
+
+  /* Same treatment, on a dark ground. */
+  .ghs-overline-dark {
+    @apply font-overline text-overline uppercase text-lamp/70;
+  }
+
+  /* Thin divider between rows. */
+  .ghs-divider {
+    @apply border-t border-rule;
+  }
+
+  /*
+   * The active state. Brass is reserved for this — if two things on a screen
+   * are brass, one of them is wrong.
+   */
+  .ghs-pill-active {
+    @apply bg-brass font-semibold text-sanctuary;
+  }
+
+  .ghs-pill-idle {
+    @apply text-ink-muted hover:bg-parchment hover:text-ink;
+  }
+
+  /* Pills on the teal header, where the idle state sits on a dark ground. */
+  .ghs-pill-idle-dark {
+    @apply text-lamp/70 hover:bg-white/10 hover:text-lamp;
+  }
+
+  /*
+   * A left rule marks anything spoken by a person — a reflection, a comment.
+   * Never applied to app chrome. That distinction is the point of the mark.
+   */
+  .ghs-attributed {
+    @apply border-l-2 border-l-cedar;
+  }
+
+  /* Input — 1px parchment border, 12px radius. */
+  .ghs-input {
+    @apply rounded-card border border-rule bg-vellum px-4 py-2.5 text-ui text-ink
+      placeholder:text-ink-faint focus:border-cedar;
+  }
+
+  /* Small metadata chip, e.g. a scripture reference. */
+  .ghs-chip {
+    @apply inline-flex items-center rounded-full bg-cedar/[0.07] px-2.5 py-1
+      font-overline text-overline uppercase text-cedar;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /*
+   * The gentle entrance is decoration. Anyone who has asked their system not to
+   * animate should get the content immediately, not a slower version of it.
+   */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

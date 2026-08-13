@@ -1,0 +1,20 @@
+{
+  "en": {
+    "id": "engwebp",
+    "lang": "en",
+    "name": "World English Bible",
+    "abbrev": "WEB",
+    "copyright": "public domain",
+    "licence": "Public domain",
+    "sourceUrl": "http://ebible.org/engwebp/"
+  },
+  "ml": {
+    "id": "mal",
+    "lang": "ml",
+    "name": "ഇന്ത്യൻ റിവൈസ്ഡ് വേർഷൻ (IRV) - മലയാളം",
+    "abbrev": "IRV MALAYALAM",
+    "copyright": "Copyright © 2017, 2019 Bridge Communication Systems",
+    "licence": "Redistributable with attribution",
+    "sourceUrl": "http://ebible.org/mal/"
+  }
+}

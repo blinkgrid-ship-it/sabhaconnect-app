@@ -1,0 +1,29 @@
+node_modules/
+dist/
+dist-ssr/
+coverage/
+.vite/
+
+# env & secrets — never commit
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# test output
+playwright-report/
+test-results/
+blob-report/
+.playwright/
+
+# editor / os
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.log
+npm-debug.log*
+
+# scratch space used by the bible seed script
+scripts/.cache/
