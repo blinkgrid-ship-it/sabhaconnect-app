@@ -4,6 +4,9 @@ dist-ssr/
 coverage/
 .vite/
 
+# TypeScript incremental build artifacts
+*.tsbuildinfo
+
 # env & secrets — never commit
 .env
 .env.local
