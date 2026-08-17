@@ -175,12 +175,34 @@ function getArtifacts(): Artifact[] {
 
 // ---- Bible --------------------------------------------------------------
 
-function getBooks(): Book[] {
+function listBooks(): Book[] {
   return db.books.slice()
 }
 
 function getVersesByRef(prefix: string): Verse[] {
   return db.verses.filter((v) => v.ref.startsWith(prefix))
+}
+
+/** All bundled verses for a book/chapter. Empty if that chapter isn't loaded in this preview. */
+function getChapter(bookId: string, chapter: number): Verse[] {
+  const book = db.books.find((b) => b.id === bookId)
+  if (!book) return []
+  return getVersesByRef(`${book.name.en} ${chapter}:`)
+}
+
+/**
+ * Accepts either a reference-shaped query (e.g. "Genesis 1:3", or a bare
+ * "1:3"/"3" a screen has already prefixed with the active book's name) and
+ * matches it against verse refs first, falling back to a full-text search
+ * across both bundled languages.
+ */
+function searchScripture(query: string): Verse[] {
+  const q = query.trim()
+  if (!q) return []
+  const lower = q.toLowerCase()
+  const refMatches = db.verses.filter((v) => v.ref.toLowerCase().startsWith(lower))
+  if (refMatches.length > 0) return refMatches
+  return db.verses.filter((v) => v.text.en.toLowerCase().includes(lower) || v.text.ml.includes(q))
 }
 
 function getLexiconForRef(ref: string): LexiconEntry[] {
@@ -214,6 +236,10 @@ function saveJournalEntry(userId: string, refId: string, body: string): JournalE
 }
 
 // ---- Comments -------------------------------------------------------------
+
+function canComment(user: User): boolean {
+  return user.canComment
+}
 
 function listComments(targetId: string, role: Role): Comment[] {
   return visible(
@@ -339,11 +365,14 @@ export const api = {
   getReminders,
   getVideoProjects,
   getArtifacts,
-  getBooks,
+  listBooks,
   getVersesByRef,
+  getChapter,
+  searchScripture,
   getLexiconForRef,
   getJournalEntry,
   saveJournalEntry,
+  canComment,
   listComments,
   addComment,
   setReviewStatus,

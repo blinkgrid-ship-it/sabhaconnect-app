@@ -9,6 +9,7 @@ export interface Part {
 }
 
 export const parts: Part[] = [
+  { key: 'today', path: '/', label: { en: 'Today', ml: 'ഇന്ന്' } },
   { key: 'feed', path: '/feed', label: { en: 'Good News Feed', ml: 'സന്തോഷവാർത്ത' } },
   { key: 'sermons', path: '/sermons', label: { en: 'The Voice', ml: 'ശബ്ദം' } },
   { key: 'devotionals', path: '/devotionals', label: { en: 'The Word', ml: 'വചനം' } },
@@ -19,7 +20,7 @@ export const parts: Part[] = [
   { key: 'prayer', path: '/assembly', label: { en: 'The Assembly', ml: 'സഭ' } },
   { key: 'video', path: '/video', label: { en: 'The Screen', ml: 'സ്ക്രീൻ' } },
   { key: 'artifacts', path: '/library', label: { en: 'Library', ml: 'ലൈബ്രറി' } },
-  { key: 'bible', path: '/bible', label: { en: 'Bible', ml: 'ബൈബിൾ' } },
+  { key: 'bible', path: '/bible', label: { en: 'The Scroll', ml: 'ചുരുൾ' } },
   {
     key: 'reminders',
     path: '/reminders',

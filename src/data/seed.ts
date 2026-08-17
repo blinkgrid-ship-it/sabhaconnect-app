@@ -66,6 +66,7 @@ export const seed: Db = {
       },
       theme: { primary: 'spirit', accent: 'gold' },
       components: [
+        'today',
         'feed',
         'sermons',
         'devotionals',
@@ -90,7 +91,7 @@ export const seed: Db = {
       parentChurchId: GHS,
       // Lighter, Malayalam-forward partner: no sermon library, giving, video,
       // reminders desk, or admin console of its own yet.
-      components: ['feed', 'devotionals', 'questions', 'reflections', 'prayer', 'groups', 'artifacts', 'bible', 'review'],
+      components: ['today', 'feed', 'devotionals', 'questions', 'reflections', 'prayer', 'groups', 'artifacts', 'bible', 'review'],
     },
   ],
 

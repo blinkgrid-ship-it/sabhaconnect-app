@@ -11,11 +11,14 @@ import { VoiceScreen } from '../modules/voice/VoiceScreen'
 import { AssemblyScreen } from '../modules/assembly/AssemblyScreen'
 import { WhatFallsThroughScreen } from '../modules/reminders/WhatFallsThroughScreen'
 import { TheScreenScreen } from '../modules/screen/TheScreenScreen'
+import { ScrollScreen } from '../modules/scroll/ScrollScreen'
+import { TodayScreen } from '../modules/today/TodayScreen'
 import type { Role } from '../types/models'
 
 const ROLES: Role[] = ['member', 'reviewer', 'pastor', 'admin']
 
 const SCREENS: Record<string, ComponentType> = {
+  today: TodayScreen,
   feed: GoodNewsFeed,
   devotionals: WordScreen,
   review: ContentStudio,
@@ -23,10 +26,11 @@ const SCREENS: Record<string, ComponentType> = {
   prayer: AssemblyScreen,
   reminders: WhatFallsThroughScreen,
   video: TheScreenScreen,
+  bible: ScrollScreen,
 }
 
 export function AppShell() {
-  const { church, churches, role, setRole, churchId, setChurchId, currentUser } = useDemo()
+  const { church, churches, role, setRole, churchId, setChurchId, currentUser, userCandidates, setUserId } = useDemo()
 
   return (
     <div className="min-h-screen bg-paper">
@@ -69,7 +73,25 @@ export function AppShell() {
             </select>
           </label>
 
-          <span className="text-paper/70">as {currentUser.name}</span>
+          {userCandidates.length > 1 ? (
+            <label className="flex items-center gap-1">
+              As
+              <select
+                className="rounded border border-paper/30 bg-spirit px-1 py-0.5 text-paper"
+                value={currentUser.id}
+                onChange={(e) => setUserId(e.target.value)}
+              >
+                {userCandidates.map((u) => (
+                  <option key={u.id} value={u.id}>
+                    {u.name}
+                    {!u.canComment ? ' (muted)' : ''}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ) : (
+            <span className="text-paper/70">as {currentUser.name}</span>
+          )}
         </div>
       </header>
 
@@ -105,7 +127,6 @@ export function AppShell() {
 
         <main className="flex-1 p-6">
           <Routes>
-            <Route path="/" element={<Navigate to={parts[0].path} replace />} />
             {parts.map((part) => {
               const Screen = SCREENS[part.key]
               return (
