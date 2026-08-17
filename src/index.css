@@ -1,0 +1,65 @@
+@import 'tailwindcss';
+
+/* Self-hosted fonts (offline-capable via @fontsource) */
+@import '@fontsource/spectral/400.css';
+@import '@fontsource/spectral/500.css';
+@import '@fontsource/spectral/600.css';
+@import '@fontsource/spectral/600-italic.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/noto-sans-malayalam/400.css';
+@import '@fontsource/noto-sans-malayalam/500.css';
+@import '@fontsource/noto-sans-malayalam/700.css';
+
+@theme {
+  /* Brand colors */
+  --color-ink: #1f2a37;
+  --color-spirit: #1f6f5c;
+  --color-gold: #b7791f;
+  --color-plum: #6b5b95;
+  --color-paper: #faf7f0;
+  --color-cloud: #f2ede1;
+  --color-mist: #e5ddca;
+
+  /* Type */
+  --font-display: 'Spectral', ui-serif, Georgia, serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-ml: 'Noto Sans Malayalam', ui-sans-serif, system-ui, sans-serif;
+
+  /* Card surface */
+  --shadow-soft:
+    0 4px 16px -4px rgb(31 42 55 / 0.12), 0 2px 6px -2px rgb(31 42 55 / 0.06);
+
+  /* Motion */
+  --animate-fade-in: fade-in 0.6s ease-out both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-mist bg-cloud shadow-soft;
+  }
+}
