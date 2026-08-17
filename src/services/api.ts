@@ -3,7 +3,7 @@
 // has to change, since every screen only ever imports `api` and the types
 // in src/types/models.ts — never seed.ts or localStorage directly.
 
-import { seed, type Db } from './seed'
+import { seed, type Db } from '../data/seed'
 import type {
   Artifact,
   Book,

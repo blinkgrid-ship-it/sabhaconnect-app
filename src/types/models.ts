@@ -131,10 +131,19 @@ export interface GivingFund {
   raisedAmount: number
 }
 
+/** What Falls Through: the pastoral-care follow-ups a busy staff might otherwise miss. */
+export type ReminderKind =
+  | 'first_time_visitor'
+  | 'prayer_follow_up'
+  | 'hospital_or_illness'
+  | 'bereavement'
+  | 'birthday'
+  | 'anniversary'
+
 export interface Reminder {
   id: string
   churchId: string
-  kind: string
+  kind: ReminderKind
   person: string
   summary: string
   firedOn: string
