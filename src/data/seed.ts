@@ -16,6 +16,8 @@ import type {
   Devotional,
   FeedItem,
   GivingFund,
+  JournalEntry,
+  LexiconEntry,
   PrayerRequest,
   PrayerRoom,
   Question,
@@ -46,6 +48,8 @@ export interface Db {
   artifacts: Artifact[]
   books: Book[]
   verses: Verse[]
+  lexicon: LexiconEntry[]
+  journalEntries: JournalEntry[]
 }
 
 const GHS = 'ghs'
@@ -249,13 +253,13 @@ export const seed: Db = {
 
   // ---- Questions: GHS daily week + one KF ----------------------------------
   questions: [
-    { id: 'gh-q1', churchId: GHS, prompt: { en: 'When have you refused to let go of God until He blessed you?', ml: 'ദൈവം അനുഗ്രഹിക്കുവോളം നീ വിടാതെ പിടിച്ചു നിന്ന ഒരു നിമിഷം ഓർക്കുക.' }, day: '2026-08-10', status: 'approved' },
-    { id: 'gh-q2', churchId: GHS, prompt: { en: 'What name or label from your past is God asking you to release?', ml: 'ഭൂതകാലത്തിലെ ഏതു പേരോ മുദ്രയോ വിട്ടുകളയാൻ ദൈവം നിന്നോടു ആവശ്യപ്പെടുന്നു?' }, day: '2026-08-11', status: 'approved' },
-    { id: 'gh-q3', churchId: GHS, prompt: { en: 'What has this season cost you — and was it worth it?', ml: 'ഈ കാലം നിന്നിൽനിന്ന് എന്തു വിലയിട്ടു — അതു യോഗ്യമായിരുന്നോ?' }, day: '2026-08-12', status: 'approved' },
-    { id: 'gh-q4', churchId: GHS, prompt: { en: 'What are you most afraid to bring honestly before God?', ml: 'ദൈവത്തിന്റെ മുമ്പിൽ സത്യസന്ധമായി കൊണ്ടുവരാൻ നീ ഏറ്റവും ഭയപ്പെടുന്നത് എന്ത്?' }, day: '2026-08-13', status: 'pending_review' },
-    { id: 'gh-q5', churchId: GHS, prompt: { en: 'When have you felt truly unseen — and how might God have been present there?', ml: 'എപ്പോഴെങ്കിലും നീ യഥാർത്ഥത്തിൽ കാണപ്പെടാത്തവളാണ് എന്നു തോന്നിയോ — അവിടെ ദൈവം സന്നിഹിതനായിരുന്നത് എങ്ങനെ?' }, day: '2026-08-14', status: 'approved' },
-    { id: 'gh-q6', churchId: GHS, prompt: { en: 'Who in your life might need you to notice them the way God noticed Hagar?', ml: 'ദൈവം ഹാഗാറിനെ ശ്രദ്ധിച്ചതുപോലെ, നിന്റെ ജീവിതത്തിൽ ആരെയാണ് നീ ശ്രദ്ധിക്കേണ്ടത്?' }, day: '2026-08-15', status: 'approved' },
-    { id: 'gh-q7', churchId: GHS, prompt: { en: 'What name would you give God based on how He has met you this week?', ml: 'ഈ ആഴ്ച ദൈവം നിന്നെ കണ്ടുമുട്ടിയ വിധം അനുസരിച്ച്, നീ അവനു എന്തു പേരു നൽകും?' }, day: '2026-08-16', status: 'approved' },
+    { id: 'gh-q1', churchId: GHS, prompt: { en: 'When have you refused to let go of God until He blessed you?', ml: 'ദൈവം അനുഗ്രഹിക്കുവോളം നീ വിടാതെ പിടിച്ചു നിന്ന ഒരു നിമിഷം ഓർക്കുക.' }, day: '2026-08-10', sourceSermonId: 'gh-s1', status: 'approved' },
+    { id: 'gh-q2', churchId: GHS, prompt: { en: 'What name or label from your past is God asking you to release?', ml: 'ഭൂതകാലത്തിലെ ഏതു പേരോ മുദ്രയോ വിട്ടുകളയാൻ ദൈവം നിന്നോടു ആവശ്യപ്പെടുന്നു?' }, day: '2026-08-11', sourceSermonId: 'gh-s1', status: 'approved' },
+    { id: 'gh-q3', churchId: GHS, prompt: { en: 'What has this season cost you — and was it worth it?', ml: 'ഈ കാലം നിന്നിൽനിന്ന് എന്തു വിലയിട്ടു — അതു യോഗ്യമായിരുന്നോ?' }, day: '2026-08-12', sourceSermonId: 'gh-s1', status: 'approved' },
+    { id: 'gh-q4', churchId: GHS, prompt: { en: 'What are you most afraid to bring honestly before God?', ml: 'ദൈവത്തിന്റെ മുമ്പിൽ സത്യസന്ധമായി കൊണ്ടുവരാൻ നീ ഏറ്റവും ഭയപ്പെടുന്നത് എന്ത്?' }, day: '2026-08-13', sourceSermonId: 'gh-s1', status: 'pending_review' },
+    { id: 'gh-q5', churchId: GHS, prompt: { en: 'When have you felt truly unseen — and how might God have been present there?', ml: 'എപ്പോഴെങ്കിലും നീ യഥാർത്ഥത്തിൽ കാണപ്പെടാത്തവളാണ് എന്നു തോന്നിയോ — അവിടെ ദൈവം സന്നിഹിതനായിരുന്നത് എങ്ങനെ?' }, day: '2026-08-14', sourceSermonId: 'gh-s2', status: 'approved' },
+    { id: 'gh-q6', churchId: GHS, prompt: { en: 'Who in your life might need you to notice them the way God noticed Hagar?', ml: 'ദൈവം ഹാഗാറിനെ ശ്രദ്ധിച്ചതുപോലെ, നിന്റെ ജീവിതത്തിൽ ആരെയാണ് നീ ശ്രദ്ധിക്കേണ്ടത്?' }, day: '2026-08-15', sourceSermonId: 'gh-s2', status: 'approved' },
+    { id: 'gh-q7', churchId: GHS, prompt: { en: 'What name would you give God based on how He has met you this week?', ml: 'ഈ ആഴ്ച ദൈവം നിന്നെ കണ്ടുമുട്ടിയ വിധം അനുസരിച്ച്, നീ അവനു എന്തു പേരു നൽകും?' }, day: '2026-08-16', sourceSermonId: 'gh-s2', status: 'approved' },
     { id: 'kf-q1', churchId: KF, prompt: { en: 'How has God shown His steadfast love to you this week?', ml: 'ഈ ആഴ്ച ദൈവം തന്റെ സ്ഥിരമായ സ്നേഹം നിനക്കു എങ്ങനെ കാണിച്ചു?' }, day: '2026-08-12', status: 'approved' },
   ],
 
@@ -477,9 +481,11 @@ export const seed: Db = {
   reminders: [
     { id: 'gh-rem1', churchId: GHS, kind: 'first_time_visitor', person: 'the Fernandez family', summary: 'Visited for the first time last Sunday — send a welcome note and connect them with a small group.', firedOn: '2026-08-11', done: false, private: true },
     { id: 'gh-rem2', churchId: GHS, kind: 'prayer_follow_up', person: 'Grace Thomas', summary: "Mother's surgery was Thursday — check in on recovery.", firedOn: '2026-08-15', done: false, private: true },
-    { id: 'gh-rem3', churchId: GHS, kind: 'hospital_or_illness', person: "Manoj Abraham's father", summary: "Admitted to St. Luke's this week — arrange a hospital visit.", firedOn: '2026-08-14', done: true, private: true },
+    { id: 'gh-rem3', churchId: GHS, kind: 'hospital_or_illness', person: "Manoj Abraham's father", summary: "Had surgery at St. Luke's this week — arrange a follow-up visit.", firedOn: '2026-08-14', done: true, private: true },
     { id: 'gh-rem4', churchId: GHS, kind: 'birthday', person: 'Vinod Kurian', summary: 'Birthday is Friday — team card going around.', firedOn: '2026-08-14', done: false, private: false },
     { id: 'gh-rem5', churchId: GHS, kind: 'bereavement', person: 'The Chandy family', summary: 'Lost their grandmother last week — check in and confirm memorial service support.', firedOn: '2026-08-10', done: false, private: true },
+    { id: 'gh-rem6', churchId: GHS, kind: 'stopped_attending', person: 'the Verghese family', summary: "Regular for two years, haven't seen them in six weeks — reach out before they feel forgotten.", firedOn: '2026-08-13', done: false, private: true },
+    { id: 'gh-rem7', churchId: GHS, kind: 'bereavement', person: 'the Kutty family', summary: 'One year today since they lost their son — a quiet call would mean a lot on a hard anniversary.', firedOn: '2026-08-16', done: false, private: true },
     { id: 'kf-rem1', churchId: KF, kind: 'anniversary', person: 'Pastor Sam & Priya Varghese', summary: '25th wedding anniversary this Sunday — recognize during service.', firedOn: '2026-08-16', done: false, private: false },
   ],
 
@@ -646,4 +652,63 @@ export const seed: Db = {
     { ref: 'Genesis 1:30', num: 30, text: { en: 'To every animal of the earth, and to every bird of the sky, and to everything that creeps on the earth, in which there is life, I have given every green herb for food;" and it was so.', ml: 'ഭൂമിയിലെ സകലമൃഗങ്ങൾക്കും ആകാശത്തിലെ സകലപക്ഷികൾക്കും ഭൂമിയിൽ ചരിക്കുന്ന ജീവനുള്ള സകലജന്തുക്കൾക്കും പച്ചസസ്യം ഒക്കെയും ഞാൻ ആഹാരമായി കൊടുത്തിരിക്കുന്നു എന്നു ദൈവം കല്പിച്ചു; അതു അങ്ങനെയായി.' } },
     { ref: 'Genesis 1:31', num: 31, text: { en: 'God saw everything that he had made, and, behold, it was very good. There was evening and there was morning, the sixth day.', ml: 'ദൈവം താൻ ഉണ്ടാക്കിയതൊക്കെയും നോക്കി, ഇതാ, വളരെ നല്ലതു എന്നു കണ്ടു. സന്ധ്യയായി പ്രഭാതമായി, ആറാം ദിവസം.' } },
   ],
+
+  // ---- Lexicon: word-study roots for The Word (citation is always required) --
+  lexicon: [
+    {
+      id: 'lex-bara',
+      verseRef: 'Genesis 1:1',
+      word: 'created',
+      original: 'בָּרָא',
+      transliteration: 'bara',
+      language: 'hebrew',
+      meaning: {
+        en: 'To create, shape, form. In the Hebrew Bible this verb is used exclusively of divine activity — never of a human making something from existing material.',
+        ml: 'സൃഷ്ടിക്കുക, രൂപപ്പെടുത്തുക. എബ്രായ തിരുവെഴുത്തിൽ ഈ ക്രിയ ദൈവിക പ്രവർത്തനത്തിനു മാത്രമേ ഉപയോഗിക്കുന്നുള്ളൂ — നിലവിലുള്ള വസ്തുക്കളിൽനിന്നു മനുഷ്യൻ എന്തെങ്കിലും ഉണ്ടാക്കുന്നതിനല്ല.',
+      },
+      citation: 'Brown-Driver-Briggs Hebrew Lexicon, ברא (bara), Strong\'s H1254',
+    },
+    {
+      id: 'lex-ruach',
+      verseRef: 'Genesis 1:2',
+      word: 'Spirit',
+      original: 'רוּחַ',
+      transliteration: 'ruach',
+      language: 'hebrew',
+      meaning: {
+        en: "Breath, wind, spirit — one word behind both \"the Spirit of God\" and \"a mighty wind.\" Its sense shifts with context, from a physical gust to the very breath of life.",
+        ml: 'ശ്വാസം, കാറ്റ്, ആത്മാവ് — "ദൈവത്തിന്റെ ആത്മാവ്" എന്നും "ശക്തമായ കാറ്റ്" എന്നും വിവർത്തനം ചെയ്യപ്പെടുന്ന ഒരേ പദം. സന്ദർഭം അനുസരിച്ചു അർത്ഥം മാറുന്നു.',
+      },
+      citation: 'Brown-Driver-Briggs Hebrew Lexicon, רוּחַ (ruach), Strong\'s H7307',
+    },
+    {
+      id: 'lex-or',
+      verseRef: 'Genesis 1:3',
+      word: 'light',
+      original: 'אוֹר',
+      transliteration: 'or',
+      language: 'hebrew',
+      meaning: {
+        en: 'Light — the first thing spoken directly into being. Used literally of daylight, and figuratively throughout Scripture for life, joy, and the presence of God.',
+        ml: 'വെളിച്ചം — നേരിട്ടു സംസാരിച്ചു ഉളവാക്കിയ ആദ്യത്തെ വസ്തു. അക്ഷരാർത്ഥത്തിൽ പകൽവെളിച്ചത്തിനും, ആലങ്കാരികമായി ജീവൻ, സന്തോഷം, ദൈവസാന്നിധ്യം എന്നിവയ്ക്കും ഉപയോഗിക്കുന്നു.',
+      },
+      citation: 'Brown-Driver-Briggs Hebrew Lexicon, אוֹר (or), Strong\'s H216',
+    },
+    {
+      id: 'lex-tov',
+      verseRef: 'Genesis 1:4',
+      word: 'good',
+      original: 'טוֹב',
+      transliteration: 'tov',
+      language: 'hebrew',
+      meaning: {
+        en: 'Good, pleasant, agreeable — the refrain repeated at every stage of creation, culminating in "very good" (tov me\'od) once humanity is made.',
+        ml: 'നല്ലതു, ഇമ്പമുള്ളതു — സൃഷ്ടിയുടെ ഓരോ ഘട്ടത്തിലും ആവർത്തിക്കുന്ന വാക്ക്, മനുഷ്യനെ സൃഷ്ടിച്ചശേഷം "അതിവിശേഷമായി നല്ലതു" എന്നതിൽ പര്യവസാനിക്കുന്നു.',
+      },
+      citation: 'Brown-Driver-Briggs Hebrew Lexicon, טוֹב (tov), Strong\'s H2896',
+    },
+  ],
+
+  // ---- Journal: private per-user reflections. Empty until a member writes one.
+  journalEntries: [],
 }

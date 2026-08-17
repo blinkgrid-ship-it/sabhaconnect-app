@@ -62,6 +62,7 @@ export interface Question {
   churchId: string
   prompt: Localized
   day: string
+  sourceSermonId?: string
   status: ReviewStatus
 }
 
@@ -139,6 +140,7 @@ export type ReminderKind =
   | 'bereavement'
   | 'birthday'
   | 'anniversary'
+  | 'stopped_attending'
 
 export interface Reminder {
   id: string
@@ -179,4 +181,26 @@ export interface Book {
   name: Localized
   testament: 'old' | 'new'
   chapterCount: number
+}
+
+/** A word-study root tied to a specific verse — the citation is required, never optional. */
+export interface LexiconEntry {
+  id: string
+  verseRef: string
+  /** The translated word (as it appears in the EN verse text) this root is attached to. */
+  word: string
+  original: string
+  transliteration: string
+  language: 'hebrew' | 'greek'
+  meaning: Localized
+  citation: string
+}
+
+/** A member's private reflection on a piece of content (e.g. a devotional). Never shared. */
+export interface JournalEntry {
+  id: string
+  userId: string
+  refId: string
+  body: string
+  updatedAt: string
 }

@@ -9,27 +9,27 @@ export interface Part {
 }
 
 export const parts: Part[] = [
-  { key: 'feed', path: '/feed', label: { en: 'Feed', ml: 'ഫീഡ്' } },
-  { key: 'sermons', path: '/sermons', label: { en: 'Sermons', ml: 'പ്രസംഗങ്ങൾ' } },
+  { key: 'feed', path: '/feed', label: { en: 'Good News Feed', ml: 'സന്തോഷവാർത്ത' } },
+  { key: 'sermons', path: '/sermons', label: { en: 'The Voice', ml: 'ശബ്ദം' } },
   { key: 'devotionals', path: '/devotionals', label: { en: 'The Word', ml: 'വചനം' } },
   { key: 'questions', path: '/questions', label: { en: 'Questions', ml: 'ചോദ്യങ്ങൾ' } },
-  { key: 'reflections', path: '/reflections', label: { en: 'The Assembly', ml: 'സഭ' } },
-  { key: 'prayer', path: '/prayer', label: { en: 'Prayer Room', ml: 'പ്രാർത്ഥനാ മുറി' } },
-  { key: 'groups', path: '/groups', label: { en: 'Small Groups', ml: 'ചെറു ഗ്രൂപ്പുകൾ' } },
-  { key: 'giving', path: '/giving', label: { en: 'Giving', ml: 'സംഭാവന' } },
-  { key: 'video', path: '/video', label: { en: 'Video', ml: 'വീഡിയോ' } },
+  { key: 'reflections', path: '/reflections', label: { en: 'Reflections', ml: 'പ്രതിഫലനങ്ങൾ' } },
+  // Prayer Rooms, Prayer Wall, Small Groups, Pastoral Care, and Giving all
+  // live as tabs inside The Assembly — see src/modules/assembly.
+  { key: 'prayer', path: '/assembly', label: { en: 'The Assembly', ml: 'സഭ' } },
+  { key: 'video', path: '/video', label: { en: 'The Screen', ml: 'സ്ക്രീൻ' } },
   { key: 'artifacts', path: '/library', label: { en: 'Library', ml: 'ലൈബ്രറി' } },
   { key: 'bible', path: '/bible', label: { en: 'Bible', ml: 'ബൈബിൾ' } },
   {
     key: 'reminders',
     path: '/reminders',
-    label: { en: 'Reminders', ml: 'ഓർമ്മപ്പെടുത്തലുകൾ' },
-    roles: ['reviewer', 'pastor', 'admin'],
+    label: { en: 'What Falls Through', ml: 'ശ്രദ്ധിക്കപ്പെടാത്തവ' },
+    roles: ['pastor', 'admin'],
   },
   {
     key: 'review',
     path: '/review',
-    label: { en: 'Review Queue', ml: 'അവലോകന ക്യൂ' },
+    label: { en: 'Content Studio', ml: 'അവലോകന ക്യൂ' },
     roles: ['reviewer', 'pastor', 'admin'],
   },
   {

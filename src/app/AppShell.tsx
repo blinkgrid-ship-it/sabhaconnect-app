@@ -1,11 +1,29 @@
+import type { ComponentType } from 'react'
 import { NavLink, Navigate, Route, Routes } from 'react-router-dom'
 import { useDemo } from '../demo/DemoContext'
 import { Guarded, isPartAccessible } from './Guarded'
 import { Placeholder } from './Placeholder'
 import { parts } from './parts'
+import { WordScreen } from '../modules/word/WordScreen'
+import { ContentStudio } from '../modules/admin/ContentStudio'
+import { GoodNewsFeed } from '../modules/feed/GoodNewsFeed'
+import { VoiceScreen } from '../modules/voice/VoiceScreen'
+import { AssemblyScreen } from '../modules/assembly/AssemblyScreen'
+import { WhatFallsThroughScreen } from '../modules/reminders/WhatFallsThroughScreen'
+import { TheScreenScreen } from '../modules/screen/TheScreenScreen'
 import type { Role } from '../types/models'
 
 const ROLES: Role[] = ['member', 'reviewer', 'pastor', 'admin']
+
+const SCREENS: Record<string, ComponentType> = {
+  feed: GoodNewsFeed,
+  devotionals: WordScreen,
+  review: ContentStudio,
+  sermons: VoiceScreen,
+  prayer: AssemblyScreen,
+  reminders: WhatFallsThroughScreen,
+  video: TheScreenScreen,
+}
 
 export function AppShell() {
   const { church, churches, role, setRole, churchId, setChurchId, currentUser } = useDemo()
@@ -88,17 +106,20 @@ export function AppShell() {
         <main className="flex-1 p-6">
           <Routes>
             <Route path="/" element={<Navigate to={parts[0].path} replace />} />
-            {parts.map((part) => (
-              <Route
-                key={part.key}
-                path={part.path}
-                element={
-                  <Guarded partKey={part.key}>
-                    <Placeholder titleEn={part.label.en} titleMl={part.label.ml} />
-                  </Guarded>
-                }
-              />
-            ))}
+            {parts.map((part) => {
+              const Screen = SCREENS[part.key]
+              return (
+                <Route
+                  key={part.key}
+                  path={part.path}
+                  element={
+                    <Guarded partKey={part.key}>
+                      {Screen ? <Screen /> : <Placeholder titleEn={part.label.en} titleMl={part.label.ml} />}
+                    </Guarded>
+                  }
+                />
+              )
+            })}
             <Route path="*" element={<Navigate to={parts[0].path} replace />} />
           </Routes>
         </main>

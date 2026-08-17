@@ -12,6 +12,8 @@ import type {
   Devotional,
   FeedItem,
   GivingFund,
+  JournalEntry,
+  LexiconEntry,
   PrayerRequest,
   PrayerRoom,
   Question,
@@ -181,6 +183,36 @@ function getVersesByRef(prefix: string): Verse[] {
   return db.verses.filter((v) => v.ref.startsWith(prefix))
 }
 
+function getLexiconForRef(ref: string): LexiconEntry[] {
+  return db.lexicon.filter((entry) => entry.verseRef === ref)
+}
+
+// ---- Journal (private per-user reflections) --------------------------------
+
+function getJournalEntry(userId: string, refId: string): JournalEntry | undefined {
+  return db.journalEntries.find((entry) => entry.userId === userId && entry.refId === refId)
+}
+
+function saveJournalEntry(userId: string, refId: string, body: string): JournalEntry {
+  const existing = db.journalEntries.find((entry) => entry.userId === userId && entry.refId === refId)
+  if (existing) {
+    existing.body = body
+    existing.updatedAt = new Date().toISOString()
+    persist()
+    return existing
+  }
+  const entry: JournalEntry = {
+    id: genId('journal'),
+    userId,
+    refId,
+    body,
+    updatedAt: new Date().toISOString(),
+  }
+  db.journalEntries.push(entry)
+  persist()
+  return entry
+}
+
 // ---- Comments -------------------------------------------------------------
 
 function listComments(targetId: string, role: Role): Comment[] {
@@ -309,6 +341,9 @@ export const api = {
   getArtifacts,
   getBooks,
   getVersesByRef,
+  getLexiconForRef,
+  getJournalEntry,
+  saveJournalEntry,
   listComments,
   addComment,
   setReviewStatus,
