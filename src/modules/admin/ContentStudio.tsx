@@ -62,21 +62,21 @@ function QueueRow({
         <button
           type="button"
           onClick={onApprove}
-          className="inline-flex items-center gap-1 rounded-md bg-spirit px-3 py-1.5 text-xs font-medium text-paper transition-colors hover:bg-spirit/90"
+          className="inline-flex min-h-11 items-center gap-1 rounded-md bg-spirit px-3 py-1.5 text-xs font-medium text-paper transition-colors hover:bg-spirit/90 sm:min-h-0"
         >
           <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" /> Approve
         </button>
         <button
           type="button"
           onClick={onHold}
-          className="inline-flex items-center gap-1 rounded-md border border-gold/50 px-3 py-1.5 text-xs font-medium text-gold transition-colors hover:bg-gold/10"
+          className="inline-flex min-h-11 items-center gap-1 rounded-md border border-gold/50 px-3 py-1.5 text-xs font-medium text-gold transition-colors hover:bg-gold/10 sm:min-h-0"
         >
           <PauseCircle className="h-3.5 w-3.5" aria-hidden="true" /> Hold
         </button>
         <button
           type="button"
           onClick={onRemove}
-          className="inline-flex items-center gap-1 rounded-md border border-plum/50 px-3 py-1.5 text-xs font-medium text-plum transition-colors hover:bg-plum/10"
+          className="inline-flex min-h-11 items-center gap-1 rounded-md border border-plum/50 px-3 py-1.5 text-xs font-medium text-plum transition-colors hover:bg-plum/10 sm:min-h-0"
         >
           <XCircle className="h-3.5 w-3.5" aria-hidden="true" /> Remove
         </button>
@@ -147,7 +147,7 @@ function ComposeForm({ churchId, onCreated }: { churchId: string; onCreated: () 
   }
 
   const inputCls =
-    'mt-1 w-full rounded-md border border-paper/20 bg-paper/5 px-3 py-1.5 text-sm text-paper placeholder:text-paper/30 focus:border-gold focus:outline-none'
+    'mt-1 min-h-11 w-full rounded-md border border-paper/20 bg-paper/5 px-3 py-1.5 text-sm text-paper placeholder:text-paper/30 focus:border-gold focus:outline-none sm:min-h-0'
   const labelCls = 'text-xs font-medium uppercase tracking-wide text-paper/50'
 
   return (
@@ -231,7 +231,7 @@ function ComposeForm({ churchId, onCreated }: { churchId: string; onCreated: () 
 
       <button
         type="submit"
-        className="rounded-md bg-gold px-4 py-1.5 text-sm font-medium text-ink transition-colors hover:bg-gold/90"
+        className="min-h-11 rounded-md bg-gold px-4 py-1.5 text-sm font-medium text-ink transition-colors hover:bg-gold/90 sm:min-h-0"
       >
         Create draft
       </button>
@@ -263,7 +263,7 @@ export function ContentStudio() {
   }
 
   return (
-    <div className="rounded-xl bg-ink p-6 text-paper shadow-soft">
+    <div className="rounded-xl bg-ink p-4 text-paper shadow-soft sm:p-6">
       <header>
         <h1 className="font-display text-2xl text-paper">Content Studio</h1>
         <p className="mt-1 text-sm text-paper/60">

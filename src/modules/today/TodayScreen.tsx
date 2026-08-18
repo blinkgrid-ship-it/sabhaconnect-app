@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ExternalLink, Landmark, Lock, Send } from 'lucide-react'
 import { useDemo } from '../../demo/DemoContext'
 import { api } from '../../services/api'
-import { Bilingual, GuardrailNote, LangToggle, SourceTag, type LangMode } from '../../app/ui'
+import { Bilingual, GuardrailNote, LangToggle, SourceTag, useLangPreference, type LangMode } from '../../app/ui'
 import type { Reflection, Role, User } from '../../types/models'
 
 /** Stable per-calendar-day pick from a list — rotates daily without a "publish date" field. */
@@ -64,12 +64,12 @@ function CommentThread({ targetId, role, currentUser }: { targetId: string; role
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && submit()}
               placeholder="Add a comment..."
-              className="min-w-0 flex-1 rounded-lg border border-mist bg-paper px-3 py-1.5 text-sm text-ink placeholder:text-ink/30 focus:border-spirit focus:outline-none"
+              className="min-h-11 min-w-0 flex-1 rounded-lg border border-mist bg-paper px-3 py-1.5 text-sm text-ink placeholder:text-ink/30 focus:border-spirit focus:outline-none sm:min-h-0"
             />
             <button
               type="button"
               onClick={submit}
-              className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-spirit px-3 py-1.5 text-xs font-medium text-paper transition-colors hover:bg-spirit/90"
+              className="inline-flex min-h-11 shrink-0 items-center gap-1 rounded-lg bg-spirit px-3 py-1.5 text-xs font-medium text-paper transition-colors hover:bg-spirit/90 sm:min-h-0"
             >
               <Send className="h-3.5 w-3.5" aria-hidden="true" /> Post
             </button>
@@ -132,7 +132,7 @@ function ArtifactOfTheDay() {
 
 export function TodayScreen() {
   const { church, churchId, role, currentUser } = useDemo()
-  const [lang, setLang] = useState<LangMode>('both')
+  const [lang, setLang] = useLangPreference()
 
   const questions = [...api.getQuestions(churchId, role)].sort((a, b) => (a.day < b.day ? 1 : -1))
   const question = questions[0]
@@ -143,7 +143,7 @@ export function TodayScreen() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="font-display text-2xl text-ink">Today</h1>
           <p className="font-ml text-sm text-ink/60">ഇന്ന്</p>
@@ -156,7 +156,7 @@ export function TodayScreen() {
       </p>
 
       {/* Question of the day */}
-      <section className="card mt-6 p-6">
+      <section className="card mt-6 p-4 sm:p-6">
         <h2 className="font-display text-lg text-ink">Question of the Day</h2>
         {question ? (
           <div className="mt-2">

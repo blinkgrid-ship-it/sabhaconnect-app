@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import { DoorOpen, HeartHandshake, Lock, LogOut, MessageCircle, Users, Wallet } from 'lucide-react'
 import { useDemo } from '../../demo/DemoContext'
 import { api } from '../../services/api'
-import { Bilingual, GuardrailNote, LangToggle, type LangMode } from '../../app/ui'
+import { Bilingual, GuardrailNote, LangToggle, useLangPreference, type LangMode } from '../../app/ui'
 import type { PrayerRequest } from '../../types/models'
 
 type TabKey = 'rooms' | 'wall' | 'groups' | 'care' | 'giving'
@@ -28,7 +28,7 @@ function TabBar({ tab, onChange }: { tab: TabKey; onChange: (t: TabKey) => void 
             type="button"
             onClick={() => onChange(t.key)}
             className={[
-              'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors',
+              'inline-flex min-h-11 items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors sm:min-h-0',
               active ? 'border-spirit bg-spirit text-paper' : 'border-mist bg-cloud text-ink/60 hover:text-ink',
             ].join(' ')}
           >
@@ -80,7 +80,7 @@ function PrayerRoomsTab({
               type="button"
               onClick={() => onEnter(room.id)}
               className={[
-                'mt-3 inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors',
+                'mt-3 inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors sm:min-h-0',
                 isEntered ? 'bg-spirit/20 text-spirit' : 'bg-spirit text-paper hover:bg-spirit/90',
               ].join(' ')}
             >
@@ -95,7 +95,17 @@ function PrayerRoomsTab({
   )
 }
 
-function PrayerRequestCard({ request, lang, onPray }: { request: PrayerRequest; lang: LangMode; onPray: () => void }) {
+function PrayerRequestCard({
+  request,
+  lang,
+  role,
+  onPray,
+}: {
+  request: PrayerRequest
+  lang: LangMode
+  role: ReturnType<typeof useDemo>['role']
+  onPray: () => void
+}) {
   return (
     <div className="card p-4">
       <div className="flex items-center justify-between gap-2">
@@ -105,13 +115,18 @@ function PrayerRequestCard({ request, lang, onPray }: { request: PrayerRequest; 
         </span>
         <span className="text-[10px] uppercase tracking-wide text-ink/40">{new Date(request.createdAt).toLocaleDateString()}</span>
       </div>
+      {role !== 'member' && request.status !== 'approved' && (
+        <span className="mt-2 inline-block rounded-full border border-plum/40 bg-plum/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-plum">
+          Staff preview — {request.status.replace('_', ' ')}
+        </span>
+      )}
       <p className="mt-2 text-sm leading-relaxed text-ink/80">
         <Bilingual text={request.body} lang={lang} />
       </p>
       <button
         type="button"
         onClick={onPray}
-        className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-spirit/40 px-3 py-1 text-xs font-medium text-spirit transition-colors hover:bg-spirit/10"
+        className="mt-3 inline-flex min-h-11 items-center gap-1.5 rounded-full border border-spirit/40 px-3 py-1 text-xs font-medium text-spirit transition-colors hover:bg-spirit/10 sm:min-h-0"
       >
         <HeartHandshake className="h-3.5 w-3.5" aria-hidden="true" /> I prayed &middot; {request.prayerCount}
       </button>
@@ -151,7 +166,7 @@ function PrayerWallTab({
           <span>
             Praying in <strong>{room.name.en}</strong>
           </span>
-          <button type="button" onClick={onLeave} className="inline-flex items-center gap-1 text-xs text-ink/50 hover:text-ink">
+          <button type="button" onClick={onLeave} className="inline-flex min-h-11 items-center gap-1 text-xs text-ink/50 hover:text-ink sm:min-h-0">
             <LogOut className="h-3.5 w-3.5" aria-hidden="true" /> Leave room
           </button>
         </div>
@@ -165,7 +180,7 @@ function PrayerWallTab({
         {requests.length === 0 ? (
           <p className="text-sm text-ink/50">No requests here yet.</p>
         ) : (
-          requests.map((r) => <PrayerRequestCard key={r.id} request={r} lang={lang} onPray={() => pray(r.id)} />)
+          requests.map((r) => <PrayerRequestCard key={r.id} request={r} lang={lang} role={role} onPray={() => pray(r.id)} />)
         )}
       </div>
     </div>
@@ -228,7 +243,7 @@ function PastoralCareTab({ churchId }: { churchId: string }) {
   }
 
   return (
-    <div className="card mt-4 p-6">
+    <div className="card mt-4 p-4 sm:p-6">
       <p className="text-sm text-ink/80">
         Need to talk to someone? This goes straight to <strong>{pastor.name}</strong>, never an automated reply.
       </p>
@@ -243,7 +258,7 @@ function PastoralCareTab({ churchId }: { churchId: string }) {
         type="button"
         disabled={!note.trim()}
         onClick={() => setSent(true)}
-        className="mt-3 rounded-lg bg-spirit px-4 py-1.5 text-sm font-medium text-paper transition-colors hover:bg-spirit/90 disabled:cursor-not-allowed disabled:opacity-40"
+        className="mt-3 min-h-11 rounded-lg bg-spirit px-4 py-1.5 text-sm font-medium text-paper transition-colors hover:bg-spirit/90 disabled:cursor-not-allowed disabled:opacity-40 sm:min-h-0"
       >
         Send to {pastor.name}
       </button>
@@ -279,7 +294,7 @@ function GivingTab({ churchId, enabled }: { churchId: string; enabled: boolean }
               type="button"
               disabled
               title="Preview only — no payment is processed"
-              className="mt-3 cursor-not-allowed rounded-lg border border-mist bg-cloud px-4 py-1.5 text-sm font-medium text-ink/40"
+              className="mt-3 min-h-11 cursor-not-allowed rounded-lg border border-mist bg-cloud px-4 py-1.5 text-sm font-medium text-ink/40 sm:min-h-0"
             >
               Give (preview only)
             </button>
@@ -292,13 +307,13 @@ function GivingTab({ churchId, enabled }: { churchId: string; enabled: boolean }
 
 export function AssemblyScreen() {
   const { church, churchId, role } = useDemo()
-  const [lang, setLang] = useState<LangMode>('both')
+  const [lang, setLang] = useLangPreference()
   const [tab, setTab] = useState<TabKey>('rooms')
   const [enteredRoomId, setEnteredRoomId] = useState<string | null>(null)
 
   return (
     <div className="mx-auto max-w-3xl">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="font-display text-2xl text-ink">The Assembly</h1>
           <p className="font-ml text-sm text-ink/60">സഭ</p>

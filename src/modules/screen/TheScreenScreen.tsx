@@ -1,210 +1,397 @@
-import { useState } from 'react'
-import { Clapperboard, Sparkles } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { Copy, MessageCircle } from 'lucide-react'
 import { useDemo } from '../../demo/DemoContext'
 import { api } from '../../services/api'
-import { GuardrailNote } from '../../app/ui'
-import type { VideoProject } from '../../types/models'
+import { GuardrailNote, LangToggle, useLangPreference, type LangMode } from '../../app/ui'
+import type { Localized, Verse } from '../../types/models'
 
-const TOPICS = ['Creation (Genesis 1)', 'Named by God: Jacob', 'Named by God: Hagar', 'The Good Samaritan', 'Psalm 23']
-const STYLES = ['Cinematic landscape', 'Typography only', 'Documentary', 'Animated'] as const
-const LENGTHS = ['60 seconds', '3 minutes', '10 minutes'] as const
-
-function posterVariant(id: string): 0 | 1 | 2 {
-  const sum = [...id].reduce((acc, ch) => acc + ch.charCodeAt(0), 0)
-  return (sum % 3) as 0 | 1 | 2
+// Literal hex values (not the CSS custom properties from src/index.css) —
+// these cards are rasterized to an offscreen <canvas> for the "copy image"
+// action, which has no access to the page's stylesheet/CSS variables.
+const TOKENS = {
+  ink: '#1f2a37',
+  spirit: '#1f6f5c',
+  gold: '#b7791f',
+  plum: '#6b5b95',
+  paper: '#faf7f0',
+  cloud: '#f2ede1',
+  mist: '#e5ddca',
 }
 
-/** Poster art is always generated typography/landscape shapes — never a photo or likeness of a person. */
-function PosterFrame({ title, variant }: { title: string; variant: 0 | 1 | 2 }) {
+const CARD_W = 720
+const CARD_H = 900
+
+interface CardSpec {
+  id: string
+  kindLabel: string
+  quote: Localized
+  attribution: string
+  variant: 0 | 1 | 2
+  /** Set only as a last-resort fallback when the grid can't be padded to an even count. */
+  spanFull?: boolean
+}
+
+/** Stable per-calendar-day pick from a list — matches the pattern in Today/The Word. */
+function dateSeedIndex(length: number, date = new Date()): number {
+  if (length <= 0) return 0
+  const key = date.toISOString().slice(0, 10)
+  let hash = 0
+  for (const ch of key) hash = (hash * 31 + ch.charCodeAt(0)) % 997
+  return hash % length
+}
+
+/** A second, distinct date-seeded verse — used to pad the grid to an even count. Scripture is
+ *  never gated by approval, so it's always safe filler (see guardrail #6, never paywalled). */
+function pickSecondaryVerse(verses: Verse[], usedRefs: Set<string>): Verse | undefined {
+  if (verses.length === 0) return undefined
+  const start = dateSeedIndex(verses.length)
+  for (let offset = 1; offset <= verses.length; offset++) {
+    const candidate = verses[(start + offset) % verses.length]
+    if (!usedRefs.has(candidate.ref)) return candidate
+  }
+  return undefined
+}
+
+function truncate(text: string, max: number): string {
+  if (text.length <= max) return text
+  const cut = text.slice(0, max)
+  const lastSpace = cut.lastIndexOf(' ')
+  return `${cut.slice(0, lastSpace > 0 ? lastSpace : max)}…`
+}
+
+function wrapCanvasText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
+  const words = text.split(/\s+/).filter(Boolean)
+  const lines: string[] = []
+  let line = ''
+  for (const word of words) {
+    const test = line ? `${line} ${word}` : word
+    if (line && ctx.measureText(test).width > maxWidth) {
+      lines.push(line)
+      line = word
+    } else {
+      line = test
+    }
+  }
+  if (line) lines.push(line)
+  return lines
+}
+
+/** Abstract, typography-only backdrops — landscapes/shapes/light, never a photo or a person. */
+function paintBackground(ctx: CanvasRenderingContext2D, variant: 0 | 1 | 2) {
   if (variant === 0) {
-    return (
-      <svg viewBox="0 0 320 180" className="h-full w-full">
-        <defs>
-          <linearGradient id={`sky-${title}`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="var(--color-spirit)" />
-            <stop offset="100%" stopColor="var(--color-paper)" />
-          </linearGradient>
-        </defs>
-        <rect width="320" height="180" fill={`url(#sky-${title})`} />
-        <circle cx="160" cy="110" r="34" fill="var(--color-gold)" opacity="0.85" />
-        <path d="M0,150 L70,95 L130,140 L190,90 L250,135 L320,100 L320,180 L0,180 Z" fill="var(--color-mist)" />
-        <path d="M0,170 L90,130 L170,165 L240,125 L320,160 L320,180 L0,180 Z" fill="var(--color-cloud)" opacity="0.9" />
-        <text x="160" y="45" textAnchor="middle" fill="var(--color-paper)" style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 600 }}>
-          {title}
-        </text>
-      </svg>
-    )
+    const sky = ctx.createLinearGradient(0, 0, 0, CARD_H)
+    sky.addColorStop(0, TOKENS.spirit)
+    sky.addColorStop(1, TOKENS.ink)
+    ctx.fillStyle = sky
+    ctx.fillRect(0, 0, CARD_W, CARD_H)
+    ctx.fillStyle = TOKENS.gold
+    ctx.globalAlpha = 0.85
+    ctx.beginPath()
+    ctx.arc(CARD_W / 2, 210, 76, 0, Math.PI * 2)
+    ctx.fill()
+    ctx.globalAlpha = 1
+    ctx.fillStyle = TOKENS.mist
+    ctx.beginPath()
+    ctx.moveTo(0, 340)
+    ctx.lineTo(160, 260)
+    ctx.lineTo(300, 320)
+    ctx.lineTo(430, 240)
+    ctx.lineTo(570, 310)
+    ctx.lineTo(CARD_W, 250)
+    ctx.lineTo(CARD_W, 420)
+    ctx.lineTo(0, 420)
+    ctx.closePath()
+    ctx.globalAlpha = 0.35
+    ctx.fill()
+    ctx.globalAlpha = 1
+    return
   }
   if (variant === 1) {
-    return (
-      <svg viewBox="0 0 320 180" className="h-full w-full">
-        <rect width="320" height="180" fill="var(--color-ink)" />
-        {[...Array(24)].map((_, i) => (
-          <circle key={i} cx={(i * 53 + 17) % 320} cy={(i * 37 + 11) % 140} r={i % 5 === 0 ? 1.6 : 0.9} fill="var(--color-gold)" opacity="0.8" />
-        ))}
-        <circle cx="250" cy="45" r="22" fill="var(--color-plum)" />
-        <circle cx="242" cy="40" r="20" fill="var(--color-ink)" />
-        <text x="160" y="150" textAnchor="middle" fill="var(--color-paper)" style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 600 }}>
-          {title}
-        </text>
-      </svg>
-    )
+    ctx.fillStyle = TOKENS.ink
+    ctx.fillRect(0, 0, CARD_W, CARD_H)
+    ctx.fillStyle = TOKENS.gold
+    for (let i = 0; i < 60; i++) {
+      const x = (i * 119 + 37) % CARD_W
+      const y = (i * 83 + 21) % (CARD_H * 0.55)
+      const r = i % 5 === 0 ? 3.2 : 1.6
+      ctx.globalAlpha = i % 3 === 0 ? 0.9 : 0.5
+      ctx.beginPath()
+      ctx.arc(x, y, r, 0, Math.PI * 2)
+      ctx.fill()
+    }
+    ctx.globalAlpha = 1
+    ctx.fillStyle = TOKENS.plum
+    ctx.beginPath()
+    ctx.arc(CARD_W - 130, 130, 54, 0, Math.PI * 2)
+    ctx.fill()
+    ctx.fillStyle = TOKENS.ink
+    ctx.beginPath()
+    ctx.arc(CARD_W - 150, 116, 48, 0, Math.PI * 2)
+    ctx.fill()
+    return
   }
-  return (
-    <svg viewBox="0 0 320 180" className="h-full w-full">
-      <rect width="320" height="180" fill="var(--color-cloud)" />
-      <rect x="0" y="86" width="320" height="4" fill="var(--color-gold)" />
-      <text x="24" y="80" fill="var(--color-ink)" style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 700 }}>
-        {title}
-      </text>
-      <text x="24" y="112" fill="var(--color-ink)" opacity="0.5" style={{ fontFamily: 'var(--font-sans)', fontSize: 12, letterSpacing: 2 }}>
-        SCRIPTURE FILM
-      </text>
-    </svg>
-  )
+  ctx.fillStyle = TOKENS.cloud
+  ctx.fillRect(0, 0, CARD_W, CARD_H)
+  ctx.fillStyle = TOKENS.gold
+  ctx.fillRect(0, 300, CARD_W, 10)
+  ctx.strokeStyle = TOKENS.mist
+  ctx.lineWidth = 2
+  for (let i = 0; i < 6; i++) {
+    ctx.beginPath()
+    ctx.moveTo(0, 400 + i * 70)
+    ctx.lineTo(CARD_W, 380 + i * 70)
+    ctx.stroke()
+  }
 }
 
-function PendingBadge() {
-  return (
-    <span className="inline-flex items-center rounded-full border border-plum/40 bg-plum/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-plum">
-      Staff preview
-    </span>
-  )
+function drawCard(canvas: HTMLCanvasElement, spec: CardSpec, lang: LangMode, churchNameEn: string) {
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return
+  canvas.width = CARD_W
+  canvas.height = CARD_H
+
+  paintBackground(ctx, spec.variant)
+
+  // Frosted panel so quote text stays legible over any background.
+  const panelTop = 300
+  ctx.fillStyle = TOKENS.ink
+  ctx.globalAlpha = 0.58
+  ctx.fillRect(0, panelTop, CARD_W, CARD_H - panelTop)
+  ctx.globalAlpha = 1
+
+  // Kind label pill.
+  ctx.font = '600 22px Inter, ui-sans-serif, system-ui, sans-serif'
+  ctx.fillStyle = TOKENS.gold
+  ctx.textBaseline = 'alphabetic'
+  ctx.fillText(spec.kindLabel.toUpperCase(), 48, panelTop + 56)
+
+  const showEn = lang !== 'ml'
+  const showMl = lang !== 'en'
+  const maxWidth = CARD_W - 96
+  let y = panelTop + 110
+
+  if (showEn) {
+    ctx.font = '600 34px Spectral, ui-serif, Georgia, serif'
+    ctx.fillStyle = TOKENS.paper
+    const lines = wrapCanvasText(ctx, `"${spec.quote.en}"`, maxWidth)
+    for (const line of lines.slice(0, 6)) {
+      ctx.fillText(line, 48, y)
+      y += 44
+    }
+    y += showMl ? 16 : 0
+  }
+
+  if (showMl) {
+    ctx.font = '500 26px "Noto Sans Malayalam", ui-sans-serif, system-ui, sans-serif'
+    ctx.fillStyle = showEn ? 'rgba(250,247,240,0.82)' : TOKENS.paper
+    const lines = wrapCanvasText(ctx, `"${spec.quote.ml}"`, maxWidth)
+    for (const line of lines.slice(0, 6)) {
+      ctx.fillText(line, 48, y)
+      y += 38
+    }
+  }
+
+  // Attribution + church name, pinned near the bottom of the panel.
+  ctx.font = '500 20px Inter, ui-sans-serif, system-ui, sans-serif'
+  ctx.fillStyle = 'rgba(250,247,240,0.7)'
+  ctx.fillText(`— ${spec.attribution}`, 48, CARD_H - 76)
+  ctx.font = '600 18px Inter, ui-sans-serif, system-ui, sans-serif'
+  ctx.fillStyle = TOKENS.gold
+  ctx.fillText(churchNameEn, 48, CARD_H - 42)
 }
 
-function GalleryCard({ project, isStaffPreview }: { project: VideoProject; isStaffPreview: boolean }) {
+function shareTextFor(spec: CardSpec, lang: LangMode, churchNameEn: string): string {
+  const lines: string[] = []
+  if (lang !== 'ml') lines.push(`"${spec.quote.en}"`)
+  if (lang !== 'en') lines.push(`"${spec.quote.ml}"`)
+  lines.push(`— ${spec.attribution}, ${churchNameEn}`)
+  return lines.join('\n\n')
+}
+
+async function copyCardImage(canvas: HTMLCanvasElement, fallbackText: string): Promise<'image' | 'text' | 'failed'> {
+  try {
+    const blob: Blob | null = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'))
+    if (!blob) throw new Error('no blob')
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])
+    return 'image'
+  } catch {
+    try {
+      await navigator.clipboard.writeText(fallbackText)
+      return 'text'
+    } catch {
+      return 'failed'
+    }
+  }
+}
+
+const COPY_MESSAGE: Record<'image' | 'text' | 'failed', string> = {
+  image: 'Card image copied — paste it anywhere.',
+  text: 'Clipboard image isn\'t supported here — copied the card text instead.',
+  failed: "Couldn't access the clipboard in this browser.",
+}
+
+function ShareCard({ spec, lang, churchNameEn }: { spec: CardSpec; lang: LangMode; churchNameEn: string }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [status, setStatus] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (canvasRef.current) drawCard(canvasRef.current, spec, lang, churchNameEn)
+  }, [spec, lang, churchNameEn])
+
+  const shareText = shareTextFor(spec, lang, churchNameEn)
+
+  function shareToWhatsApp() {
+    window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank', 'noopener,noreferrer')
+  }
+
+  async function copyImage() {
+    if (!canvasRef.current) return
+    const result = await copyCardImage(canvasRef.current, shareText)
+    setStatus(COPY_MESSAGE[result])
+    window.setTimeout(() => setStatus(null), 4000)
+  }
+
   return (
     <div className="card overflow-hidden">
-      <div className="aspect-video w-full">
-        <PosterFrame title={project.title} variant={posterVariant(project.id)} />
-      </div>
-      <div className="flex items-center justify-between gap-2 p-3">
-        <p className="text-sm font-medium text-ink">{project.title}</p>
-        {isStaffPreview && <PendingBadge />}
+      <canvas
+        ref={canvasRef}
+        role="img"
+        aria-label={`${spec.kindLabel}: ${spec.quote.en} — ${spec.attribution}`}
+        className="aspect-[4/5] w-full"
+      />
+      <div className="flex flex-wrap items-center gap-2 p-3">
+        <button
+          type="button"
+          onClick={shareToWhatsApp}
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-lg bg-spirit px-3 py-1.5 text-xs font-medium text-paper transition-colors hover:bg-spirit/90 sm:min-h-0"
+        >
+          <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" /> Share to WhatsApp
+        </button>
+        <button
+          type="button"
+          onClick={copyImage}
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-mist bg-cloud px-3 py-1.5 text-xs font-medium text-ink/70 transition-colors hover:text-ink sm:min-h-0"
+        >
+          <Copy className="h-3.5 w-3.5" aria-hidden="true" /> Copy image/link
+        </button>
+        {status && <p className="w-full text-xs text-ink/50">{status}</p>}
       </div>
     </div>
   )
 }
 
-interface QueuedItem {
-  id: string
-  topic: string
-  style: (typeof STYLES)[number]
-  length: (typeof LENGTHS)[number]
-}
-
 export function TheScreenScreen() {
-  const { churchId, role } = useDemo()
-  const projects = api.getVideoProjects(churchId, role)
+  const { church, churchId, role } = useDemo()
+  const [lang, setLang] = useLangPreference()
+  const [verses, setVerses] = useState<Verse[] | null>(null)
 
-  const [topic, setTopic] = useState(TOPICS[0])
-  const [style, setStyle] = useState<(typeof STYLES)[number]>(STYLES[0])
-  const [length, setLength] = useState<(typeof LENGTHS)[number]>(LENGTHS[0])
-  const [queued, setQueued] = useState<QueuedItem[]>([])
+  useEffect(() => {
+    let cancelled = false
+    api.getVersesByRef('Genesis 1').then((vs) => {
+      if (!cancelled) setVerses(vs)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
-  function submit(e: React.FormEvent) {
-    e.preventDefault()
-    setQueued((cur) => [{ id: `mock-${Date.now()}`, topic, style, length }, ...cur])
+  const approvedQuestions = api.getQuestions(churchId, role).filter((q) => q.status === 'approved')
+  const approvedDevotionals = api.getDevotionals(churchId, role).filter((d) => d.status === 'approved')
+  const approvedFeed = api.getFeedItems(churchId, role).filter((f) => f.status === 'approved')
+
+  const question = [...approvedQuestions].sort((a, b) => (a.day < b.day ? 1 : -1))[0]
+  const devotional = [...approvedDevotionals].sort((a, b) => (a.day < b.day ? 1 : -1))[0]
+  const feedItem = approvedFeed.find((f) => f.category === 'testimony') ?? approvedFeed[0]
+  const verse = verses && verses.length > 0 ? verses[dateSeedIndex(verses.length)] : undefined
+
+  const specs: CardSpec[] = []
+  if (question) {
+    specs.push({
+      id: question.id,
+      kindLabel: "Today's Question",
+      quote: question.prompt,
+      attribution: 'Question of the Day',
+      variant: 0,
+    })
+  }
+  if (devotional) {
+    specs.push({
+      id: devotional.id,
+      kindLabel: 'Devotional',
+      quote: { en: truncate(devotional.body.en, 180), ml: truncate(devotional.body.ml, 160) },
+      attribution: truncate(devotional.title.en, 46),
+      variant: 1,
+    })
+  }
+  if (feedItem) {
+    specs.push({
+      id: feedItem.id,
+      kindLabel: 'Good News',
+      quote: { en: truncate(feedItem.body.en, 180), ml: truncate(feedItem.body.ml, 160) },
+      attribution: truncate(feedItem.title.en, 46),
+      variant: 2,
+    })
+  }
+  if (verse) {
+    specs.push({
+      id: verse.ref,
+      kindLabel: 'Scripture',
+      quote: verse.text,
+      attribution: `${verse.ref} · WEB / Malayalam OV`,
+      variant: 0,
+    })
+  }
+
+  // Never leave a single card orphaned on its own row: pad odd counts with one
+  // more scripture card first (scripture is inexhaustible and never gated by
+  // review status), and only as a last resort — e.g. verses haven't loaded yet
+  // — make the final card span the row so it doesn't read as a stray half-tile.
+  if (specs.length % 2 === 1 && verses) {
+    const usedRefs = new Set(specs.map((s) => s.id))
+    const extraVerse = pickSecondaryVerse(verses, usedRefs)
+    if (extraVerse) {
+      specs.push({
+        id: extraVerse.ref,
+        kindLabel: 'Scripture',
+        quote: extraVerse.text,
+        attribution: `${extraVerse.ref} · WEB / Malayalam OV`,
+        variant: (specs.length % 3) as 0 | 1 | 2,
+      })
+    }
+  }
+  if (specs.length % 2 === 1) {
+    specs[specs.length - 1] = { ...specs[specs.length - 1], spanFull: true }
   }
 
   return (
-    <div className="mx-auto max-w-4xl">
-      <div>
-        <h1 className="font-display text-2xl text-ink">The Screen</h1>
-        <p className="font-ml text-sm text-ink/60">സ്ക്രീൻ</p>
+    <div className="mx-auto max-w-6xl">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h1 className="font-display text-2xl text-ink">Shareable Cards</h1>
+          <p className="font-ml text-sm text-ink/60">പങ്കിടാവുന്ന കാർഡുകൾ</p>
+        </div>
+        <LangToggle lang={lang} onChange={setLang} />
       </div>
       <GuardrailNote className="mt-2">
-        Every poster is generated from typography and abstract scenery — never a photo or likeness of a real
-        person.
+        Auto-generated from approved content only — a card never shows anything pending review, even in staff
+        view. Backgrounds are always typography and abstract scenery, never a photo or likeness of a person.
       </GuardrailNote>
+      <p className="mt-1 text-xs text-ink/40">
+        Demo preview — WhatsApp opens with the text prefilled; "Copy image/link" copies straight to your
+        clipboard. Nothing is sent automatically.
+      </p>
 
-      <section className="mt-6">
-        <h2 className="font-display text-lg text-ink">Gallery</h2>
-        <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.length === 0 ? (
-            <p className="text-sm text-ink/50">Nothing published yet.</p>
-          ) : (
-            projects.map((p) => (
-              <GalleryCard key={p.id} project={p} isStaffPreview={role !== 'member' && p.status !== 'approved'} />
-            ))
-          )}
-        </div>
-      </section>
-
-      <section className="card mt-6 p-6">
-        <div className="flex items-center gap-2">
-          <Clapperboard className="h-5 w-5 text-spirit" aria-hidden="true" />
-          <h2 className="font-display text-lg text-ink">Create a Scripture Film</h2>
-        </div>
-        <p className="mt-1 text-sm text-ink/60">
-          This is a front-end preview — nothing here triggers real video generation. Production is quoted
-          separately.
-        </p>
-
-        <form onSubmit={submit} className="mt-4 grid gap-3 sm:grid-cols-3">
-          <label className="text-xs font-medium uppercase tracking-wide text-ink/50">
-            Topic
-            <select
-              value={topic}
-              onChange={(e) => setTopic(e.target.value)}
-              className="mt-1 w-full rounded-md border border-mist bg-paper px-2 py-1.5 text-sm text-ink focus:border-spirit focus:outline-none"
-            >
-              {TOPICS.map((t) => (
-                <option key={t} value={t}>
-                  {t}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="text-xs font-medium uppercase tracking-wide text-ink/50">
-            Style
-            <select
-              value={style}
-              onChange={(e) => setStyle(e.target.value as (typeof STYLES)[number])}
-              className="mt-1 w-full rounded-md border border-mist bg-paper px-2 py-1.5 text-sm text-ink focus:border-spirit focus:outline-none"
-            >
-              {STYLES.map((s) => (
-                <option key={s} value={s}>
-                  {s}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="text-xs font-medium uppercase tracking-wide text-ink/50">
-            Length
-            <select
-              value={length}
-              onChange={(e) => setLength(e.target.value as (typeof LENGTHS)[number])}
-              className="mt-1 w-full rounded-md border border-mist bg-paper px-2 py-1.5 text-sm text-ink focus:border-spirit focus:outline-none"
-            >
-              {LENGTHS.map((l) => (
-                <option key={l} value={l}>
-                  {l}
-                </option>
-              ))}
-            </select>
-          </label>
-          <button
-            type="submit"
-            className="inline-flex w-fit items-center gap-1.5 rounded-lg bg-gold px-4 py-1.5 text-sm font-medium text-ink transition-colors hover:bg-gold/90 sm:col-span-3"
-          >
-            <Sparkles className="h-4 w-4" aria-hidden="true" /> Queue preview
-          </button>
-        </form>
-
-        {queued.length > 0 && (
-          <div className="mt-4 space-y-2 border-t border-mist pt-4">
-            {queued.map((q) => (
-              <div key={q.id} className="flex items-center justify-between rounded-lg border border-mist bg-cloud px-3 py-2 text-sm">
-                <span className="text-ink">
-                  {q.topic} &middot; {q.style} &middot; {q.length}
-                </span>
-                <span className="text-[10px] font-medium uppercase tracking-wide text-plum">Preview only</span>
-              </div>
-            ))}
-          </div>
+      <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {specs.length === 0 ? (
+          <p className="text-sm text-ink/50">Nothing approved yet to turn into a card — check back soon.</p>
+        ) : (
+          specs.map((spec) => (
+            <div key={spec.id} className={spec.spanFull ? 'sm:col-span-2' : ''}>
+              <ShareCard spec={spec} lang={lang} churchNameEn={church.name.en} />
+            </div>
+          ))
         )}
-      </section>
+      </div>
     </div>
   )
 }

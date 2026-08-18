@@ -4,6 +4,7 @@
 // in src/types/models.ts — never seed.ts or localStorage directly.
 
 import { seed, type Db } from '../data/seed'
+import { loadBookData } from '../data/bible/registry'
 import type {
   Artifact,
   Book,
@@ -20,6 +21,7 @@ import type {
   ReviewStatus,
   Reflection,
   Reminder,
+  Resource,
   Role,
   Sermon,
   SmallGroup,
@@ -173,40 +175,71 @@ function getArtifacts(): Artifact[] {
   return db.artifacts.slice()
 }
 
-// ---- Bible --------------------------------------------------------------
+// ---- Resources (Library: sermon/devotional-audio companions + downloads) --
+
+function getResources(churchId: string, role: Role): Resource[] {
+  return visible(byChurch(db.resources, churchId), role)
+}
+
+// ---- Bible ----------------------------------------------------------------
+// Book metadata (titles, chapter counts) stays eager and in-memory above via
+// `db.books` — it's tiny and the reader needs it before any book is opened.
+// Verse/lexicon text is bulky, so it's dynamically imported per book the
+// first time that book is touched (see src/data/bible/registry.ts). That
+// makes these four reads async now, matching how a real network-backed API
+// would behave once this seam is swapped for one.
+
+function findBookByRef(ref: string): Book | undefined {
+  return db.books.find((b) => ref.startsWith(`${b.name.en} `))
+}
 
 function listBooks(): Book[] {
   return db.books.slice()
 }
 
-function getVersesByRef(prefix: string): Verse[] {
-  return db.verses.filter((v) => v.ref.startsWith(prefix))
+async function getVersesByRef(prefix: string): Promise<Verse[]> {
+  const book = findBookByRef(prefix) ?? db.books.find((b) => prefix.startsWith(b.name.en))
+  if (!book) return []
+  const { verses } = await loadBookData(book.id)
+  return verses.filter((v) => v.ref.startsWith(prefix))
 }
 
 /** All bundled verses for a book/chapter. Empty if that chapter isn't loaded in this preview. */
-function getChapter(bookId: string, chapter: number): Verse[] {
+async function getChapter(bookId: string, chapter: number): Promise<Verse[]> {
   const book = db.books.find((b) => b.id === bookId)
   if (!book) return []
-  return getVersesByRef(`${book.name.en} ${chapter}:`)
+  const { verses } = await loadBookData(bookId)
+  return verses.filter((v) => v.ref.startsWith(`${book.name.en} ${chapter}:`))
 }
 
 /**
  * Accepts either a reference-shaped query (e.g. "Genesis 1:3", or a bare
  * "1:3"/"3" a screen has already prefixed with the active book's name) and
  * matches it against verse refs first, falling back to a full-text search
- * across both bundled languages.
+ * across both bundled languages. Only searches books already registered for
+ * on-demand loading (see src/data/bible/registry.ts) — matching the "only
+ * Genesis 1 is bundled in this preview" scope of the demo.
  */
-function searchScripture(query: string): Verse[] {
+async function searchScripture(query: string): Promise<Verse[]> {
   const q = query.trim()
   if (!q) return []
   const lower = q.toLowerCase()
-  const refMatches = db.verses.filter((v) => v.ref.toLowerCase().startsWith(lower))
+
+  const candidateBook = findBookByRef(q)
+  const bookIds = candidateBook ? [candidateBook.id] : db.books.map((b) => b.id)
+  const chunks = await Promise.all(bookIds.map((id) => loadBookData(id)))
+  const verses = chunks.flatMap((c) => c.verses)
+
+  const refMatches = verses.filter((v) => v.ref.toLowerCase().startsWith(lower))
   if (refMatches.length > 0) return refMatches
-  return db.verses.filter((v) => v.text.en.toLowerCase().includes(lower) || v.text.ml.includes(q))
+  return verses.filter((v) => v.text.en.toLowerCase().includes(lower) || v.text.ml.includes(q))
 }
 
-function getLexiconForRef(ref: string): LexiconEntry[] {
-  return db.lexicon.filter((entry) => entry.verseRef === ref)
+async function getLexiconForRef(ref: string): Promise<LexiconEntry[]> {
+  const book = findBookByRef(ref)
+  if (!book) return []
+  const { lexicon } = await loadBookData(book.id)
+  return lexicon.filter((entry) => entry.verseRef === ref)
 }
 
 // ---- Journal (private per-user reflections) --------------------------------
@@ -365,6 +398,7 @@ export const api = {
   getReminders,
   getVideoProjects,
   getArtifacts,
+  getResources,
   listBooks,
   getVersesByRef,
   getChapter,

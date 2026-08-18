@@ -58,7 +58,7 @@ function ReminderCard({
           type="button"
           onClick={onMarkDone}
           disabled={reminder.done}
-          className="inline-flex items-center gap-1.5 rounded-md bg-spirit px-3 py-1.5 text-xs font-medium text-paper transition-colors hover:bg-spirit/90 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-md bg-spirit px-3 py-1.5 text-xs font-medium text-paper transition-colors hover:bg-spirit/90 disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-0"
         >
           <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
           {reminder.done ? 'Done' : 'Mark done'}
@@ -67,7 +67,7 @@ function ReminderCard({
         <select
           value={assignedTo}
           onChange={(e) => onAssign(e.target.value)}
-          className="rounded-md border border-mist bg-cloud px-2 py-1.5 text-xs text-ink focus:border-spirit focus:outline-none"
+          className="min-h-11 rounded-md border border-mist bg-cloud px-2 py-1.5 text-xs text-ink focus:border-spirit focus:outline-none sm:min-h-0"
         >
           <option value="">Assign to...</option>
           {staff.map((s) => (
@@ -83,7 +83,7 @@ function ReminderCard({
 }
 
 export function WhatFallsThroughScreen() {
-  const { church, churchId } = useDemo()
+  const { church, churchId, role } = useDemo()
   const [, setTick] = useState(0)
   const [filter, setFilter] = useState<ReminderKind | 'all'>('all')
   // Assignment has no backing model field — it's intentionally local-only,
@@ -91,7 +91,8 @@ export function WhatFallsThroughScreen() {
   const [assignments, setAssignments] = useState<Record<string, string>>({})
 
   const staff = api.getUsers(churchId).filter((u) => u.role !== 'member')
-  const reminders = api.getReminders(churchId, 'admin') // this screen is pastor/admin-only; see full private list
+  // Route is already pastor/admin-only (see parts.ts), so this always resolves to the full private list.
+  const reminders = api.getReminders(churchId, role)
 
   const kinds = Array.from(new Set(reminders.map((r) => r.kind)))
   const filtered = filter === 'all' ? reminders : reminders.filter((r) => r.kind === filter)
@@ -123,7 +124,7 @@ export function WhatFallsThroughScreen() {
             type="button"
             onClick={() => setFilter('all')}
             className={[
-              'rounded-full border px-3 py-1 text-xs font-medium transition-colors',
+              'min-h-11 rounded-full border px-3 py-1 text-xs font-medium transition-colors sm:min-h-0',
               filter === 'all' ? 'border-spirit bg-spirit text-paper' : 'border-mist bg-cloud text-ink/60 hover:text-ink',
             ].join(' ')}
           >
@@ -135,7 +136,7 @@ export function WhatFallsThroughScreen() {
               type="button"
               onClick={() => setFilter(k)}
               className={[
-                'rounded-full border px-3 py-1 text-xs font-medium transition-colors',
+                'min-h-11 rounded-full border px-3 py-1 text-xs font-medium transition-colors sm:min-h-0',
                 filter === k ? 'border-spirit bg-spirit text-paper' : 'border-mist bg-cloud text-ink/60 hover:text-ink',
               ].join(' ')}
             >

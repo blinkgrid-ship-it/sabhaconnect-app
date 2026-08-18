@@ -161,6 +161,18 @@ export interface VideoProject {
   status: ReviewStatus
 }
 
+/** A downloadable study resource (PDF/notes) shown in the Library. */
+export interface Resource {
+  id: string
+  churchId: string
+  title: Localized
+  description: Localized
+  kind: 'pdf' | 'notes'
+  category: string
+  fileLabel: string
+  status: ReviewStatus
+}
+
 export interface Artifact {
   id: string
   name: string

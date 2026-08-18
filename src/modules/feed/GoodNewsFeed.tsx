@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Sparkles } from 'lucide-react'
 import { useDemo } from '../../demo/DemoContext'
 import { api } from '../../services/api'
-import { Bilingual, GuardrailNote, LangToggle, SourceTag, type LangMode } from '../../app/ui'
+import { Bilingual, GuardrailNote, LangToggle, SourceTag, useLangPreference, type LangMode } from '../../app/ui'
 import type { FeedItem } from '../../types/models'
 
 function PendingBadge() {
@@ -57,7 +57,7 @@ function HeroCard({ item, lang, isStaffPreview }: { item: FeedItem; lang: LangMo
 
 export function GoodNewsFeed() {
   const { church, churchId, role } = useDemo()
-  const [lang, setLang] = useState<LangMode>('both')
+  const [lang, setLang] = useLangPreference()
   const [category, setCategory] = useState<string>('all')
 
   const items = api.getFeedItems(churchId, role)
@@ -70,7 +70,7 @@ export function GoodNewsFeed() {
 
   return (
     <div className="mx-auto max-w-4xl">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="font-display text-2xl text-ink">Good News Feed</h1>
           <p className="font-ml text-sm text-ink/60">സന്തോഷവാർത്ത</p>
@@ -94,7 +94,7 @@ export function GoodNewsFeed() {
             type="button"
             onClick={() => setCategory('all')}
             className={[
-              'rounded-full border px-3 py-1 text-xs font-medium transition-colors',
+              'min-h-11 rounded-full border px-3 py-1 text-xs font-medium transition-colors sm:min-h-0',
               category === 'all' ? 'border-spirit bg-spirit text-paper' : 'border-mist bg-cloud text-ink/60 hover:text-ink',
             ].join(' ')}
           >
@@ -106,7 +106,7 @@ export function GoodNewsFeed() {
               type="button"
               onClick={() => setCategory(cat)}
               className={[
-                'rounded-full border px-3 py-1 text-xs font-medium capitalize transition-colors',
+                'min-h-11 rounded-full border px-3 py-1 text-xs font-medium capitalize transition-colors sm:min-h-0',
                 category === cat ? 'border-spirit bg-spirit text-paper' : 'border-mist bg-cloud text-ink/60 hover:text-ink',
               ].join(' ')}
             >

@@ -1,4 +1,5 @@
 import { ShieldCheck } from 'lucide-react'
+import { useState } from 'react'
 import type { ReactNode } from 'react'
 import type { Localized } from '../types/models'
 
@@ -10,6 +11,48 @@ const LANG_OPTIONS: { value: LangMode; label: string }[] = [
   { value: 'ml', label: 'ML' },
 ]
 
+const LANG_STORAGE_KEY = 'ghs.lang.v1'
+
+function isLangMode(value: string): value is LangMode {
+  return value === 'both' || value === 'en' || value === 'ml'
+}
+
+function loadStoredLang(): LangMode | null {
+  try {
+    const raw = localStorage.getItem(LANG_STORAGE_KEY)
+    if (raw && isLangMode(raw)) return raw
+  } catch {
+    // ignore — falls through to the default below
+  }
+  return null
+}
+
+/**
+ * The Both/EN/ML toggle's starting value on every screen: a saved device
+ * preference wins, otherwise Malayalam — most first-time visitors are
+ * Malayalee, so ML is the right default, not English. Every screen still
+ * offers Both/EN/ML equally; this only decides where the toggle starts.
+ *
+ * Once user profiles carry a signed-in `preferredLang` (set at sign-up,
+ * alongside future accessibility preferences), that should be checked here
+ * *before* the stored device preference — this is the one place that
+ * ordering needs to change.
+ */
+export function useLangPreference(): [LangMode, (lang: LangMode) => void] {
+  const [lang, setLangState] = useState<LangMode>(() => loadStoredLang() ?? 'ml')
+
+  function setLang(next: LangMode) {
+    setLangState(next)
+    try {
+      localStorage.setItem(LANG_STORAGE_KEY, next)
+    } catch {
+      // ignore — preference just won't persist across reloads this session
+    }
+  }
+
+  return [lang, setLang]
+}
+
 export function LangToggle({ lang, onChange }: { lang: LangMode; onChange: (lang: LangMode) => void }) {
   return (
     <div className="inline-flex shrink-0 rounded-lg border border-mist bg-cloud p-0.5 text-xs">
@@ -19,7 +62,7 @@ export function LangToggle({ lang, onChange }: { lang: LangMode; onChange: (lang
           type="button"
           onClick={() => onChange(opt.value)}
           className={[
-            'rounded-md px-2.5 py-1 font-medium transition-colors',
+            'min-h-11 rounded-md px-2.5 py-1 font-medium transition-colors sm:min-h-0',
             lang === opt.value ? 'bg-spirit text-paper' : 'text-ink/60 hover:text-ink',
           ].join(' ')}
         >

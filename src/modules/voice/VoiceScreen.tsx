@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { ChevronDown, Mic, Pause, Play, Search } from 'lucide-react'
 import { useDemo } from '../../demo/DemoContext'
 import { api } from '../../services/api'
-import { Bilingual, GuardrailNote, LangToggle, type LangMode } from '../../app/ui'
+import { Bilingual, GuardrailNote, LangToggle, useLangPreference, type LangMode } from '../../app/ui'
 import { SILENT_CLIP_DATA_URL } from './silentClip'
 import type { Sermon } from '../../types/models'
 
@@ -43,7 +43,7 @@ function AudioPlayer({ src }: { src: string }) {
       <button
         type="button"
         onClick={togglePlay}
-        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-spirit text-paper transition-colors hover:bg-spirit/90"
+        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-spirit text-paper transition-colors hover:bg-spirit/90"
         aria-label={isPlaying ? 'Pause' : 'Play'}
       >
         {isPlaying ? <Pause className="h-4 w-4" aria-hidden="true" /> : <Play className="ml-0.5 h-4 w-4" aria-hidden="true" />}
@@ -96,7 +96,7 @@ function SermonCard({ sermon, lang, expanded, onToggle }: { sermon: Sermon; lang
 
 export function VoiceScreen() {
   const { churchId, role } = useDemo()
-  const [lang, setLang] = useState<LangMode>('both')
+  const [lang, setLang] = useLangPreference()
   const [featuredId, setFeaturedId] = useState<string | null>(null)
   const [query, setQuery] = useState('')
   const [expandedSermonId, setExpandedSermonId] = useState<string | null>(null)
@@ -114,7 +114,7 @@ export function VoiceScreen() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="font-display text-2xl text-ink">The Voice</h1>
           <p className="font-ml text-sm text-ink/60">ശബ്ദം</p>
@@ -123,7 +123,7 @@ export function VoiceScreen() {
       </div>
 
       {/* Today's audio */}
-      <section className="card mt-6 p-6">
+      <section className="card mt-6 p-4 sm:p-6">
         <h2 className="font-display text-lg text-ink">Today's Audio</h2>
         {featured ? (
           <div className="mt-3">
@@ -155,7 +155,7 @@ export function VoiceScreen() {
       </section>
 
       {/* Podcast list */}
-      <section className="card mt-4 p-6">
+      <section className="card mt-4 p-4 sm:p-6">
         <h2 className="font-display text-lg text-ink">This Week's Episodes</h2>
         <div className="mt-3 space-y-2">
           {devotionals.length === 0 && <p className="text-sm text-ink/50">No episodes yet.</p>}
@@ -168,7 +168,7 @@ export function VoiceScreen() {
                 type="button"
                 onClick={() => setFeaturedId(d.id)}
                 className={[
-                  'flex w-full items-center justify-between gap-3 rounded-lg border px-3 py-2 text-left text-sm transition-colors',
+                  'flex min-h-11 w-full items-center justify-between gap-3 rounded-lg border px-3 py-2 text-left text-sm transition-colors',
                   isFeatured ? 'border-spirit bg-spirit/10' : 'border-mist bg-cloud hover:bg-mist/40',
                 ].join(' ')}
               >
@@ -185,7 +185,7 @@ export function VoiceScreen() {
       </section>
 
       {/* Sermon archive */}
-      <section className="card mt-4 p-6">
+      <section className="card mt-4 p-4 sm:p-6">
         <h2 className="font-display text-lg text-ink">Sermon Archive</h2>
         <div className="mt-3 flex items-center gap-2 rounded-lg border border-mist bg-paper px-3 py-2">
           <Search className="h-4 w-4 shrink-0 text-ink/40" aria-hidden="true" />

@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BookOpen, Mic, MessageCircle } from 'lucide-react'
 import { useDemo } from '../../demo/DemoContext'
 import { api } from '../../services/api'
-import { Bilingual, GuardrailNote, LangToggle, type LangMode } from '../../app/ui'
-import type { LexiconEntry } from '../../types/models'
+import { Bilingual, GuardrailNote, LangToggle, useLangPreference, type LangMode } from '../../app/ui'
+import type { LexiconEntry, Verse } from '../../types/models'
 
 function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
@@ -40,7 +40,7 @@ function JournalBox({ refId, userId }: { refId: string; userId: string }) {
         <button
           type="button"
           onClick={save}
-          className="rounded-lg bg-spirit px-4 py-1.5 text-sm font-medium text-paper transition-colors hover:bg-spirit/90"
+          className="min-h-11 rounded-lg bg-spirit px-4 py-1.5 text-sm font-medium text-paper transition-colors hover:bg-spirit/90 sm:min-h-0"
         >
           Save
         </button>
@@ -91,34 +91,85 @@ function HighlightedVerseText({
   )
 }
 
-function RootCard({ entry, lang }: { entry: LexiconEntry; lang: LangMode }) {
+/** Inline on sm+; a tappable bottom sheet (with backdrop) below sm so it never covers the verse it explains. */
+function RootCard({ entry, lang, onClose }: { entry: LexiconEntry; lang: LangMode; onClose: () => void }) {
   return (
-    <div className="card animate-fade-in mt-2 border-l-4 border-l-gold p-4">
-      <div className="flex items-baseline gap-3">
-        <span dir="rtl" className="font-display text-3xl text-ink">
-          {entry.original}
-        </span>
-        <span className="font-display text-lg italic text-spirit">{entry.transliteration}</span>
-        <span className="text-[11px] uppercase tracking-wide text-ink/40">{entry.language}</span>
+    <>
+      <div className="fixed inset-0 z-40 bg-ink/30 sm:hidden" onClick={onClose} aria-hidden="true" />
+      <div
+        role="dialog"
+        aria-modal="true"
+        className="card animate-fade-in fixed inset-x-0 bottom-0 z-50 max-h-[70vh] overflow-y-auto rounded-b-none p-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:static sm:z-auto sm:mt-2 sm:max-h-none sm:rounded-b-xl sm:border-l-4 sm:border-l-gold"
+      >
+        <div className="mb-2 flex justify-center sm:hidden">
+          <span className="h-1 w-10 rounded-full bg-mist" aria-hidden="true" />
+        </div>
+        <div className="flex items-baseline gap-3">
+          <span dir="rtl" className="font-display text-3xl text-ink">
+            {entry.original}
+          </span>
+          <span className="font-display text-lg italic text-spirit">{entry.transliteration}</span>
+          <span className="text-[11px] uppercase tracking-wide text-ink/40">{entry.language}</span>
+        </div>
+        <p className="mt-2 text-sm leading-relaxed text-ink/80">
+          <Bilingual text={entry.meaning} lang={lang} />
+        </p>
+        <p className="mt-3 flex items-center gap-1.5 border-t border-mist pt-2 text-[11px] text-ink/50">
+          <BookOpen className="h-3 w-3 shrink-0" aria-hidden="true" />
+          {entry.citation}
+        </p>
+        <button
+          type="button"
+          onClick={onClose}
+          className="mt-3 min-h-11 w-full rounded-lg border border-mist text-sm font-medium text-ink/60 sm:hidden"
+        >
+          Close
+        </button>
       </div>
-      <p className="mt-2 text-sm leading-relaxed text-ink/80">
-        <Bilingual text={entry.meaning} lang={lang} />
-      </p>
-      <p className="mt-3 flex items-center gap-1.5 border-t border-mist pt-2 text-[11px] text-ink/50">
-        <BookOpen className="h-3 w-3 shrink-0" aria-hidden="true" />
-        {entry.citation}
-      </p>
+    </>
+  )
+}
+
+function VerseSkeleton() {
+  return (
+    <div className="animate-pulse space-y-3" aria-hidden="true">
+      {[...Array(6)].map((_, i) => (
+        <div key={i} className="space-y-1.5">
+          <div className="h-3 w-full rounded bg-mist" />
+          <div className="h-3 w-5/6 rounded bg-mist" />
+        </div>
+      ))}
     </div>
   )
 }
 
 export function WordScreen() {
   const { church, churchId, role, currentUser } = useDemo()
-  const [lang, setLang] = useState<LangMode>('both')
+  const [lang, setLang] = useLangPreference()
   const [openRootId, setOpenRootId] = useState<string | null>(null)
   const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [verses, setVerses] = useState<Verse[] | null>(null)
+  const [lexiconByRef, setLexiconByRef] = useState<Record<string, LexiconEntry[]>>({})
 
-  const verses = api.getVersesByRef('Genesis 1')
+  useEffect(() => {
+    let cancelled = false
+    api.getVersesByRef('Genesis 1').then(async (vs) => {
+      if (cancelled) return
+      setVerses(vs)
+      const perVerse = await Promise.all(vs.map((v) => api.getLexiconForRef(v.ref)))
+      if (cancelled) return
+      const map: Record<string, LexiconEntry[]> = {}
+      vs.forEach((v, i) => {
+        map[v.ref] = perVerse[i]
+      })
+      setLexiconByRef(map)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const openEntry = verses?.flatMap((v) => lexiconByRef[v.ref] ?? []).find((e) => e.id === openRootId)
 
   // Ascending by day, for the week strip. A newly approved devotional simply
   // appears in this list the moment a member reloads it — no matter which
@@ -133,7 +184,7 @@ export function WordScreen() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="font-display text-2xl text-ink">The Word</h1>
           <p className="font-ml text-sm text-ink/60">വചനം</p>
@@ -142,7 +193,7 @@ export function WordScreen() {
       </div>
 
       {/* Today's Passage */}
-      <section className="card mt-6 p-6">
+      <section className="card mt-6 p-4 sm:p-6">
         <div className="flex items-baseline justify-between">
           <h2 className="font-display text-lg text-ink">Today's Passage — Genesis 1</h2>
         </div>
@@ -152,38 +203,42 @@ export function WordScreen() {
         </GuardrailNote>
 
         <div className="mt-4 max-h-[28rem] overflow-y-auto pr-1">
-          {verses.map((verse) => {
-            const entries = api.getLexiconForRef(verse.ref)
-            const showEn = lang !== 'ml'
-            const showMl = lang !== 'en'
-            return (
-              <div key={verse.ref} className="mb-3">
-                {showEn && (
-                  <p className="leading-relaxed text-ink">
-                    <sup className="mr-1 font-display text-xs font-semibold text-gold">{verse.num}</sup>
-                    <HighlightedVerseText
-                      text={verse.text.en}
-                      entries={entries}
-                      openRootId={openRootId}
-                      onToggleRoot={(id) => setOpenRootId((cur) => (cur === id ? null : id))}
-                    />
-                  </p>
-                )}
-                {showMl && (
-                  <p className={`font-ml leading-relaxed text-ink/80 ${showEn ? 'mt-1' : ''}`}>
-                    {!showEn && <sup className="mr-1 font-display text-xs font-semibold text-gold">{verse.num}</sup>}
-                    {verse.text.ml}
-                  </p>
-                )}
-                {entries.map((entry) => (openRootId === entry.id ? <RootCard key={entry.id} entry={entry} lang={lang} /> : null))}
-              </div>
-            )
-          })}
+          {verses === null ? (
+            <VerseSkeleton />
+          ) : (
+            verses.map((verse) => {
+              const entries = lexiconByRef[verse.ref] ?? []
+              const showEn = lang !== 'ml'
+              const showMl = lang !== 'en'
+              return (
+                <div key={verse.ref} className="mb-3">
+                  {showEn && (
+                    <p className="leading-relaxed text-ink">
+                      <sup className="mr-1 font-display text-xs font-semibold text-gold">{verse.num}</sup>
+                      <HighlightedVerseText
+                        text={verse.text.en}
+                        entries={entries}
+                        openRootId={openRootId}
+                        onToggleRoot={(id) => setOpenRootId((cur) => (cur === id ? null : id))}
+                      />
+                    </p>
+                  )}
+                  {showMl && (
+                    <p className={`font-ml leading-relaxed text-ink/80 ${showEn ? 'mt-1' : ''}`}>
+                      {!showEn && <sup className="mr-1 font-display text-xs font-semibold text-gold">{verse.num}</sup>}
+                      {verse.text.ml}
+                    </p>
+                  )}
+                </div>
+              )
+            })
+          )}
+          {openEntry && <RootCard entry={openEntry} lang={lang} onClose={() => setOpenRootId(null)} />}
         </div>
       </section>
 
       {/* This Week's Study */}
-      <section className="card mt-4 p-6">
+      <section className="card mt-4 p-4 sm:p-6">
         <h2 className="font-display text-lg text-ink">This Week's Study</h2>
         {devotionals.length === 0 ? (
           <p className="mt-2 text-sm text-ink/50">No study has been published yet — check back soon.</p>
@@ -199,7 +254,7 @@ export function WordScreen() {
                     type="button"
                     onClick={() => setSelectedId(d.id)}
                     className={[
-                      'shrink-0 rounded-full border px-3 py-1 text-xs font-medium transition-colors',
+                      'inline-flex min-h-11 shrink-0 items-center rounded-full border px-3 py-1 text-xs font-medium transition-colors sm:min-h-0',
                       isSelected ? 'border-spirit bg-spirit text-paper' : 'border-mist bg-cloud text-ink/60 hover:text-ink',
                     ].join(' ')}
                   >
@@ -240,7 +295,7 @@ export function WordScreen() {
       </section>
 
       {/* Today's Question + Journal */}
-      <section className="card mt-4 p-6">
+      <section className="card mt-4 p-4 sm:p-6">
         <h2 className="font-display text-lg text-ink">Question for This Day</h2>
         {selectedQuestion ? (
           <p className="mt-2 text-base text-ink/90">
