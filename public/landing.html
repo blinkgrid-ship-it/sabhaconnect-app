@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>[[PRODUCT_NAME]] — Personal pastoral care that scales, in every language your church speaks</title>
-<meta name="description" content="[[PRODUCT_NAME]] turns a pastor's own words into a warm, human-approved daily message that reaches every member — even the homebound — in their own language. Try the live demo.">
+<title>SabhaConnect — Personal pastoral care that scales, in every language your church speaks</title>
+<meta name="description" content="SabhaConnect turns a pastor's own words into a warm, human-approved daily message that reaches every member — even the homebound — in their own language. Try the live demo.">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#1f6f5c">
 <meta property="og:type" content="website">
-<meta property="og:title" content="[[PRODUCT_NAME]] — Personal pastoral care that scales">
+<meta property="og:title" content="SabhaConnect — Personal pastoral care that scales">
 <meta property="og:description" content="Every member hears from their pastor, in their own language, every morning — drafted from the pastor's own words, approved by a human before anyone else sees it.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f6f5c'/%3E%3Ccircle cx='32' cy='30' r='13' fill='%23e0b458'/%3E%3Cpath d='M14 52c4-10 12-16 18-16s14 6 18 16' fill='none' stroke='%23faf7f0' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
@@ -286,11 +286,62 @@ footer.site-footer{ background:var(--ink); color:rgba(250,247,240,.85); padding:
 .footer-note{ font-size:14px; max-width:420px; color:rgba(250,247,240,.75); }
 .footer-bottom{ margin-top:30px; padding-top:22px; border-top:1px solid rgba(250,247,240,.15); font-size:13px; color:rgba(250,247,240,.5); }
 
+/* ============ Real imagery ============ */
+.hero-art img, .story-art img, .lang-art img, .care-art img, .closing-art img{
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+.care-art{
+  border-radius:24px; overflow:hidden; box-shadow:var(--shadow); aspect-ratio:3/1; background:var(--cloud); margin-bottom:32px;
+}
+.closing-art{
+  border-radius:16px; overflow:hidden; box-shadow:var(--shadow); aspect-ratio:16/9; background:rgba(250,247,240,.08); margin-bottom:22px; max-width:420px;
+}
+
+/* ============ Listen bars ============ */
+.listen-bars{ display:inline-flex; align-items:flex-end; gap:2px; height:14px; }
+.listen-bars span{ width:3px; height:40%; background:currentColor; border-radius:2px; opacity:.75; display:block; }
+@media (prefers-reduced-motion:no-preference){
+  .listen-btn[data-speaking="true"] .listen-bars span{ animation:barbounce .9s ease-in-out infinite; }
+  .listen-bars span:nth-child(1){ animation-delay:0s; }
+  .listen-bars span:nth-child(2){ animation-delay:.15s; }
+  .listen-bars span:nth-child(3){ animation-delay:.3s; }
+  .listen-bars span:nth-child(4){ animation-delay:.45s; }
+  @keyframes barbounce{ 0%,100%{ height:30%; } 50%{ height:100%; } }
+}
+
+/* ============ Scroll reveal ============ */
+.reveal{ opacity:1; }
+@media (prefers-reduced-motion:no-preference){
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+}
+
+/* ============ Card hover lift ============ */
+@media (prefers-reduced-motion:no-preference){
+  .wid-card, .guarantee{ transition:transform .2s ease, box-shadow .2s ease; }
+  .wid-card:hover, .guarantee:hover{ transform:translateY(-4px); box-shadow:0 10px 24px -8px rgb(31 42 55 / 0.2); }
+  .trust-chip{ transition:transform .2s ease, background .2s ease; }
+  .trust-chip:hover{ transform:translateY(-3px); background:rgba(250,247,240,.14); }
+}
+
+/* ============ Hero gradient glow ============ */
+.hero{ position:relative; overflow:hidden; }
+.hero::before{
+  content:""; position:absolute; top:-15%; right:-8%; width:55%; aspect-ratio:1; border-radius:50%;
+  background:radial-gradient(circle, rgba(224,180,88,.22), rgba(224,180,88,0) 70%); pointer-events:none; z-index:0;
+}
+@media (prefers-reduced-motion:no-preference){
+  .hero::before{ animation:heroglow 10s ease-in-out infinite; }
+  @keyframes heroglow{ 0%,100%{ transform:scale(1); opacity:1; } 50%{ transform:scale(1.12); opacity:.7; } }
+}
+.hero .hero-grid{ position:relative; z-index:1; }
+
 /* ============ Misc ============ */
 .visually-hidden{
   position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
 }
 </style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important;}</style></noscript>
 </head>
 <body>
 <a class="skip-link" href="#main"><span data-en="Skip to content" data-ml="ഉള്ളടക്കത്തിലേക്ക് പോകുക">ഉള്ളടക്കത്തിലേക്ക് പോകുക</span></a>
@@ -298,7 +349,7 @@ footer.site-footer{ background:var(--ink); color:rgba(250,247,240,.85); padding:
 <header class="site-header">
   <div class="header-row">
     <div class="lockup">
-      <span class="product-name">[[PRODUCT_NAME]]</span>
+      <span class="product-name">SabhaConnect</span>
       <span class="maker-mark"><span data-en="Built by Blinkgrid" data-ml="Blinkgrid നിർമ്മിച്ചത്">Blinkgrid നിർമ്മിച്ചത്</span></span>
     </div>
     <nav class="nav-links" aria-label="Primary">
@@ -332,41 +383,19 @@ footer.site-footer{ background:var(--ink); color:rgba(250,247,240,.85); padding:
           <span data-en="Human-approved before anything reaches a member." data-ml="ഒരു അംഗത്തിലേക്ക് എത്തുന്നതിനു മുമ്പ് മനുഷ്യൻ അംഗീകരിച്ചത്.">ഒരു അംഗത്തിലേക്ക് എത്തുന്നതിനു മുമ്പ് മനുഷ്യൻ അംഗീകരിച്ചത്.</span>
         </p>
       </div>
-      <div class="hero-art" aria-hidden="true">
-        <svg viewBox="0 0 600 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="An open book beneath rising light, over gentle green hills">
-          <defs>
-            <linearGradient id="hsky" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#1f6f5c"/>
-              <stop offset="100%" stop-color="#1f2a37"/>
-            </linearGradient>
-            <radialGradient id="hsun" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#e0b458"/>
-              <stop offset="100%" stop-color="#b7791f"/>
-            </radialGradient>
-          </defs>
-          <rect width="600" height="500" fill="url(#hsky)"/>
-          <circle cx="300" cy="190" r="110" fill="url(#hsun)" opacity="0.9"/>
-          <g stroke="#faf7f0" stroke-width="2" opacity="0.35">
-            <path d="M300 40 v40"/><path d="M170 90 l28 28"/><path d="M430 90 l-28 28"/>
-          </g>
-          <path d="M0,330 C120,290 220,350 300,320 C400,285 480,330 600,300 L600,500 L0,500 Z" fill="#16584a"/>
-          <path d="M0,380 C140,350 260,400 380,360 C480,330 560,370 600,350 L600,500 L0,500 Z" fill="#123f35"/>
-          <g transform="translate(190,300)">
-            <path d="M0,80 Q110,10 220,80 L220,140 Q110,90 0,140 Z" fill="#faf7f0" stroke="#b7791f" stroke-width="4"/>
-            <line x1="110" y1="18" x2="110" y2="132" stroke="#b7791f" stroke-width="2.5"/>
-            <g stroke="#1f2a37" stroke-width="2.5" opacity="0.4">
-              <line x1="20" y1="42" x2="86" y2="32"/><line x1="20" y1="60" x2="82" y2="50"/><line x1="20" y1="78" x2="74" y2="68"/>
-              <line x1="134" y1="32" x2="200" y2="42"/><line x1="138" y1="50" x2="200" y2="60"/><line x1="146" y1="68" x2="200" y2="78"/>
-            </g>
-          </g>
-        </svg>
+      <div class="hero-art">
+        <img
+          src="https://images.pexels.com/photos/2019333/pexels-photo-2019333.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=900&amp;h=750&amp;fit=crop"
+          width="600" height="500"
+          alt="A congregation worshipping together indoors, hands raised in a warmly lit room"
+          loading="eager" fetchpriority="high" decoding="async">
       </div>
     </div>
   </section>
 
   <!-- ============ TRUST STRIP: DIGITAL SCRIBE ============ -->
   <section class="trust" aria-labelledby="trust-h">
-    <div class="container">
+    <div class="container reveal">
       <div class="section-head">
         <span class="eyebrow" style="background:rgba(250,247,240,.15);color:var(--gold-light)"><span data-en="The #1 thing to know" data-ml="ഏറ്റവും പ്രധാനപ്പെട്ട കാര്യം">ഏറ്റവും പ്രധാനപ്പെട്ട കാര്യം</span></span>
         <h2 id="trust-h"><span data-en="Meet your Digital Scribe" data-ml="നിങ്ങളുടെ ഡിജിറ്റൽ ലേഖകനെ പരിചയപ്പെടുക">നിങ്ങളുടെ ഡിജിറ്റൽ ലേഖകനെ പരിചയപ്പെടുക</span></h2>
@@ -391,9 +420,9 @@ footer.site-footer{ background:var(--ink); color:rgba(250,247,240,.85); padding:
 
   <!-- ============ STORY: MARY ============ -->
   <section class="story">
-    <div class="container story-grid">
+    <div class="container story-grid reveal">
       <div class="story-art">
-        <img loading="lazy" width="640" height="480" alt="An open book warmed by morning sunrise light over green hills, symbolizing a quiet daily blessing" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNDgwIiByb2xlPSJpbWciIGFyaWEtaGlkZGVuPSJ0cnVlIj4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0ic2t5ZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjEiPgo8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZjJlZGUxIi8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZhZjdmMCIvPgo8L2xpbmVhckdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InN1bmciIGN4PSI1MCUiIGN5PSI1MCUiIHI9IjUwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNlMGI0NTgiLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjYjc3OTFmIi8+CjwvcmFkaWFsR3JhZGllbnQ+CjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSI0ODAiIGZpbGw9InVybCgjc2t5ZykiLz4KPGNpcmNsZSBjeD0iNDcwIiBjeT0iMTUwIiByPSIxMjAiIGZpbGw9InVybCgjc3VuZykiIG9wYWNpdHk9IjAuODUiLz4KPGcgb3BhY2l0eT0iMC45Ij4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEyMCIgaGVpZ2h0PSI0ODAiIGZpbGw9IiMxZjZmNWMiIG9wYWNpdHk9IjAuMTIiLz4KPHJlY3QgeD0iNDAiIHk9IjAiIHdpZHRoPSI4IiBoZWlnaHQ9IjQ4MCIgZmlsbD0iIzFmNmY1YyIgb3BhY2l0eT0iMC4yNSIvPgo8L2c+CjxwYXRoIGQ9Ik0wLDM0MCBDMTIwLDMwMCAyMDAsMzYwIDMyMCwzMjAgQzQyMCwyOTAgNTIwLDMzMCA2NDAsMzAwIEw2NDAsNDgwIEwwLDQ4MCBaIiBmaWxsPSIjMWY2ZjVjIiBvcGFjaXR5PSIwLjg1Ii8+CjxwYXRoIGQ9Ik0wLDM4MCBDMTQwLDM1MCAyNjAsNDAwIDM4MCwzNjAgQzQ4MCwzMzAgNTYwLDM3MCA2NDAsMzUwIEw2NDAsNDgwIEwwLDQ4MCBaIiBmaWxsPSIjMTY1ODRhIi8+CjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIzMCwyNzApIj4KPHBhdGggZD0iTTAsNjAgUTkwLDAgMTgwLDYwIEwxODAsMTEwIFE5MCw3MCAwLDExMCBaIiBmaWxsPSIjZmFmN2YwIiBzdHJva2U9IiNiNzc5MWYiIHN0cm9rZS13aWR0aD0iMyIvPgo8bGluZSB4MT0iOTAiIHkxPSIxNCIgeDI9IjkwIiB5Mj0iMTA0IiBzdHJva2U9IiNiNzc5MWYiIHN0cm9rZS13aWR0aD0iMiIvPgo8bGluZSB4MT0iMTgiIHkxPSIzNCIgeDI9IjcwIiB5Mj0iMjYiIHN0cm9rZT0iIzFmMmEzNyIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIwLjM1Ii8+CjxsaW5lIHgxPSIxOCIgeTE9IjUwIiB4Mj0iNjYiIHkyPSI0MiIgc3Ryb2tlPSIjMWYyYTM3IiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuMzUiLz4KPGxpbmUgeDE9IjE4IiB5MT0iNjYiIHgyPSI2MCIgeTI9IjU4IiBzdHJva2U9IiMxZjJhMzciIHN0cm9rZS13aWR0aD0iMiIgb3BhY2l0eT0iMC4zNSIvPgo8bGluZSB4MT0iMTEwIiB5MT0iMjYiIHgyPSIxNjIiIHkyPSIzNCIgc3Ryb2tlPSIjMWYyYTM3IiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuMzUiLz4KPGxpbmUgeDE9IjExNCIgeTE9IjQyIiB4Mj0iMTYyIiB5Mj0iNTAiIHN0cm9rZT0iIzFmMmEzNyIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIwLjM1Ii8+CjxsaW5lIHgxPSIxMjAiIHkxPSI1OCIgeDI9IjE2MiIgeTI9IjY2IiBzdHJva2U9IiMxZjJhMzciIHN0cm9rZS13aWR0aD0iMiIgb3BhY2l0eT0iMC4zNSIvPgo8L2c+CjxnIHN0cm9rZT0iI2I3NzkxZiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9IjAuNTUiPgo8cGF0aCBkPSJNNDcwIDI2MCBxMCAyMiAwIDQwIi8+CjxwYXRoIGQ9Ik00NDAgMjUwIHEtNiAyNCAtMTAgNDIiLz4KPHBhdGggZD0iTTUwMCAyNTAgcTYgMjQgMTAgNDIiLz4KPC9nPgo8L3N2Zz4K">
+        <img loading="lazy" decoding="async" width="640" height="480" alt="An elderly woman reading quietly at home in warm afternoon light, the kind of quiet morning Mary spends with her messages" src="https://images.pexels.com/photos/7394785/pexels-photo-7394785.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=900&amp;h=675&amp;fit=crop">
       </div>
       <div>
         <span class="eyebrow"><span data-en="The person we designed this for" data-ml="ഞങ്ങൾ ആർക്കുവേണ്ടി ഇതു രൂപകൽപ്പന ചെയ്തു">ഞങ്ങൾ ആർക്കുവേണ്ടി ഇതു രൂപകൽപ്പന ചെയ്തു</span></span>
@@ -409,6 +438,7 @@ footer.site-footer{ background:var(--ink); color:rgba(250,247,240,.85); padding:
           </p>
           <button type="button" class="listen-btn" id="listen-btn" aria-pressed="false">
             <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4Z"/><path d="M19 5a15 15 0 0 1 0 14"/><path d="M15.5 8.5a8 8 0 0 1 0 7"/></svg>
+            <span class="listen-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
             <span data-en="Tap to hear the blessing" data-ml="അനുഗ്രഹം കേൾക്കാൻ സ്പർശിക്കൂ">അനുഗ്രഹം കേൾക്കാൻ സ്പർശിക്കൂ</span>
           </button>
           <div class="reply-chips">
@@ -427,7 +457,7 @@ footer.site-footer{ background:var(--ink); color:rgba(250,247,240,.85); padding:
 
   <!-- ============ WHAT IT DOES ============ -->
   <section id="what-it-does">
-    <div class="container">
+    <div class="container reveal">
       <div class="section-head">
         <span class="eyebrow"><span data-en="What it does" data-ml="ഇത് എന്തു ചെയ്യുന്നു">ഇത് എന്തു ചെയ്യുന്നു</span></span>
         <h2><span data-en="Relief, not a feature list" data-ml="ഫീച്ചർ പട്ടികയല്ല, ആശ്വാസം">ഫീച്ചർ പട്ടികയല്ല, ആശ്വാസം</span></h2>
@@ -463,7 +493,7 @@ footer.site-footer{ background:var(--ink); color:rgba(250,247,240,.85); padding:
 
   <!-- ============ LANGUAGES ============ -->
   <section class="languages">
-    <div class="container lang-grid">
+    <div class="container lang-grid reveal">
       <div>
         <span class="eyebrow" style="background:rgba(250,247,240,.15);color:var(--gold-light)"><span data-en="Bilingual, honestly reviewed" data-ml="ദ്വിഭാഷ, സത്യസന്ധമായി അവലോകനം ചെയ്തത്">ദ്വിഭാഷ, സത്യസന്ധമായി അവലോകനം ചെയ്തത്</span></span>
         <h2><span data-en="One message. Many languages." data-ml="ഒരു സന്ദേശം. പല ഭാഷകൾ.">ഒരു സന്ദേശം. പല ഭാഷകൾ.</span></h2>
@@ -475,17 +505,20 @@ footer.site-footer{ background:var(--ink); color:rgba(250,247,240,.85); padding:
         </div>
       </div>
       <div class="lang-art">
-        <img loading="lazy" width="640" height="320" alt="Abstract network of connected points representing one message reaching many languages and places" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgMzIwIiByb2xlPSJpbWciIGFyaWEtaGlkZGVuPSJ0cnVlIj4KPHJlY3Qgd2lkdGg9IjY0MCIgaGVpZ2h0PSIzMjAiIGZpbGw9IiMxZjJhMzciLz4KPGcgc3Ryb2tlPSIjYjc3OTFmIiBzdHJva2Utd2lkdGg9IjEuNSIgb3BhY2l0eT0iMC41NSI+CjxsaW5lIHgxPSIxMDAiIHkxPSI4MCIgeDI9IjI2MCIgeTI9IjE1MCIvPgo8bGluZSB4MT0iMjYwIiB5MT0iMTUwIiB4Mj0iNDIwIiB5Mj0iOTAiLz4KPGxpbmUgeDE9IjI2MCIgeTE9IjE1MCIgeDI9IjMzMCIgeTI9IjI0MCIvPgo8bGluZSB4MT0iNDIwIiB5MT0iOTAiIHgyPSI1NDAiIHkyPSIxNjAiLz4KPGxpbmUgeDE9IjMzMCIgeTE9IjI0MCIgeDI9IjQ4MCIgeTI9IjI1MCIvPgo8bGluZSB4MT0iMTAwIiB5MT0iODAiIHgyPSIxODAiIHkyPSIyMjAiLz4KPGxpbmUgeDE9IjE4MCIgeTE9IjIyMCIgeDI9IjMzMCIgeTI9IjI0MCIvPgo8bGluZSB4MT0iNDIwIiB5MT0iOTAiIHgyPSIzMzAiIHkyPSIyNDAiLz4KPC9nPgo8ZyBmaWxsPSIjZTBiNDU4Ij4KPGNpcmNsZSBjeD0iMTAwIiBjeT0iODAiIHI9IjciLz4KPGNpcmNsZSBjeD0iMjYwIiBjeT0iMTUwIiByPSIxMCIvPgo8Y2lyY2xlIGN4PSI0MjAiIGN5PSI5MCIgcj0iNyIvPgo8Y2lyY2xlIGN4PSIzMzAiIGN5PSIyNDAiIHI9IjciLz4KPGNpcmNsZSBjeD0iNTQwIiBjeT0iMTYwIiByPSI2Ii8+CjxjaXJjbGUgY3g9IjE4MCIgY3k9IjIyMCIgcj0iNiIvPgo8Y2lyY2xlIGN4PSI0ODAiIGN5PSIyNTAiIHI9IjYiLz4KPC9nPgo8Y2lyY2xlIGN4PSIyNjAiIGN5PSIxNTAiIHI9IjE4IiBmaWxsPSJub25lIiBzdHJva2U9IiNmYWY3ZjAiIHN0cm9rZS13aWR0aD0iMiIgb3BhY2l0eT0iMC42Ii8+Cjwvc3ZnPgo=">
+        <img loading="lazy" decoding="async" width="640" height="320" alt="A family spanning generations spending warm time together at home" src="https://images.pexels.com/photos/3820132/pexels-photo-3820132.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=900&amp;h=450&amp;fit=crop">
       </div>
     </div>
   </section>
 
   <!-- ============ GUARANTEES ============ -->
   <section id="guarantees">
-    <div class="container">
+    <div class="container reveal">
       <div class="section-head">
         <span class="eyebrow"><span data-en="Guarantees" data-ml="ഉറപ്പുകൾ">ഉറപ്പുകൾ</span></span>
         <h2><span data-en="Six promises we don't break" data-ml="ഞങ്ങൾ ലംഘിക്കാത്ത ആറു വാഗ്ദാനങ്ങൾ">ഞങ്ങൾ ലംഘിക്കാത്ത ആറു വാഗ്ദാനങ്ങൾ</span></h2>
+      </div>
+      <div class="care-art">
+        <img loading="lazy" decoding="async" width="1200" height="400" alt="Hands folded in prayer over an open Bible" src="https://images.pexels.com/photos/267559/pexels-photo-267559.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400&amp;h=467&amp;fit=crop">
       </div>
       <div class="guarantee-grid">
         <div class="guarantee">
@@ -524,20 +557,23 @@ footer.site-footer{ background:var(--ink); color:rgba(250,247,240,.85); padding:
 
   <!-- ============ WHO IT'S FOR ============ -->
   <section class="who" id="who">
-    <div class="container who-inner">
+    <div class="container who-inner reveal">
       <span class="eyebrow"><span data-en="Who it's for" data-ml="ആർക്കുവേണ്ടി">ആർക്കുവേണ്ടി</span></span>
       <h2><span data-en="Built for pastors — and for churches scattered across the world." data-ml="ഇടയന്മാർക്കുവേണ്ടി — ലോകമെമ്പാടും ചിതറിക്കിടക്കുന്ന സഭകൾക്കുവേണ്ടി.">ഇടയന്മാർക്കുവേണ്ടി — ലോകമെമ്പാടും ചിതറിക്കിടക്കുന്ന സഭകൾക്കുവേണ്ടി.</span></h2>
-      <p><span data-en="For a congregation split across three continents and two generations, a single WhatsApp forward isn't pastoral care. [[PRODUCT_NAME]] is for pastors who refuse to let distance — or language — become the reason someone stops feeling shepherded. Especially for the Malayalee diaspora: church families with grandparents in Kerala and grandchildren in Chicago, Dubai, or Melbourne, all needing to hear the same voice, in the language that reaches their heart." data-ml="മൂന്നു ഭൂഖണ്ഡങ്ങളിലും രണ്ടു തലമുറകളിലുമായി ചിതറിക്കിടക്കുന്ന ഒരു സഭക്ക്, ഒരു WhatsApp ഫോർവേഡ് ഇടയപരിപാലനമല്ല. ദൂരമോ ഭാഷയോ ആരെയെങ്കിലും ഇടയനില്ലാത്തവനെപ്പോലെ തോന്നിക്കാൻ അനുവദിക്കാത്ത ഇടയന്മാർക്കുവേണ്ടിയാണ് [[PRODUCT_NAME]]. പ്രത്യേകിച്ചും പ്രവാസി മലയാളി സഭക്കുവേണ്ടി: കേരളത്തിൽ മുത്തശ്ശിമുത്തശ്ശന്മാരും ഷിക്കാഗോയിലോ ദുബായിലോ മെൽബണിലോ കൊച്ചുമക്കളും ഉള്ള സഭാ കുടുംബങ്ങൾ — എല്ലാവർക്കും ഒരേ ശബ്ദം, ഹൃദയത്തിലെത്തുന്ന ഭാഷയിൽ.">മൂന്നു ഭൂഖണ്ഡങ്ങളിലും രണ്ടു തലമുറകളിലുമായി ചിതറിക്കിടക്കുന്ന ഒരു സഭക്ക്, ഒരു WhatsApp ഫോർവേഡ് ഇടയപരിപാലനമല്ല. ദൂരമോ ഭാഷയോ ആരെയെങ്കിലും ഇടയനില്ലാത്തവനെപ്പോലെ തോന്നിക്കാൻ അനുവദിക്കാത്ത ഇടയന്മാർക്കുവേണ്ടിയാണ് [[PRODUCT_NAME]]. പ്രത്യേകിച്ചും പ്രവാസി മലയാളി സഭക്കുവേണ്ടി: കേരളത്തിൽ മുത്തശ്ശിമുത്തശ്ശന്മാരും ഷിക്കാഗോയിലോ ദുബായിലോ മെൽബണിലോ കൊച്ചുമക്കളും ഉള്ള സഭാ കുടുംബങ്ങൾ — എല്ലാവർക്കും ഒരേ ശബ്ദം, ഹൃദയത്തിലെത്തുന്ന ഭാഷയിൽ.</span></p>
+      <p><span data-en="For a congregation split across three continents and two generations, a single WhatsApp forward isn't pastoral care. SabhaConnect is for pastors who refuse to let distance — or language — become the reason someone stops feeling shepherded. Especially for the Malayalee diaspora: church families with grandparents in Kerala and grandchildren in Chicago, Dubai, or Melbourne, all needing to hear the same voice, in the language that reaches their heart." data-ml="മൂന്നു ഭൂഖണ്ഡങ്ങളിലും രണ്ടു തലമുറകളിലുമായി ചിതറിക്കിടക്കുന്ന ഒരു സഭക്ക്, ഒരു WhatsApp ഫോർവേഡ് ഇടയപരിപാലനമല്ല. ദൂരമോ ഭാഷയോ ആരെയെങ്കിലും ഇടയനില്ലാത്തവനെപ്പോലെ തോന്നിക്കാൻ അനുവദിക്കാത്ത ഇടയന്മാർക്കുവേണ്ടിയാണ് SabhaConnect. പ്രത്യേകിച്ചും പ്രവാസി മലയാളി സഭക്കുവേണ്ടി: കേരളത്തിൽ മുത്തശ്ശിമുത്തശ്ശന്മാരും ഷിക്കാഗോയിലോ ദുബായിലോ മെൽബണിലോ കൊച്ചുമക്കളും ഉള്ള സഭാ കുടുംബങ്ങൾ — എല്ലാവർക്കും ഒരേ ശബ്ദം, ഹൃദയത്തിലെത്തുന്ന ഭാഷയിൽ.">മൂന്നു ഭൂഖണ്ഡങ്ങളിലും രണ്ടു തലമുറകളിലുമായി ചിതറിക്കിടക്കുന്ന ഒരു സഭക്ക്, ഒരു WhatsApp ഫോർവേഡ് ഇടയപരിപാലനമല്ല. ദൂരമോ ഭാഷയോ ആരെയെങ്കിലും ഇടയനില്ലാത്തവനെപ്പോലെ തോന്നിക്കാൻ അനുവദിക്കാത്ത ഇടയന്മാർക്കുവേണ്ടിയാണ് SabhaConnect. പ്രത്യേകിച്ചും പ്രവാസി മലയാളി സഭക്കുവേണ്ടി: കേരളത്തിൽ മുത്തശ്ശിമുത്തശ്ശന്മാരും ഷിക്കാഗോയിലോ ദുബായിലോ മെൽബണിലോ കൊച്ചുമക്കളും ഉള്ള സഭാ കുടുംബങ്ങൾ — എല്ലാവർക്കും ഒരേ ശബ്ദം, ഹൃദയത്തിലെത്തുന്ന ഭാഷയിൽ.</span></p>
     </div>
   </section>
 
   <!-- ============ FINAL CTA ============ -->
   <section class="cta-footer" id="contact">
-    <div class="container">
+    <div class="container reveal">
       <div class="cta-box">
         <div>
+          <div class="closing-art">
+            <img loading="lazy" decoding="async" width="640" height="360" alt="A single candle glowing warmly in the evening, a quiet symbol of hope" src="https://images.pexels.com/photos/6332042/pexels-photo-6332042.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=700&amp;h=394&amp;fit=crop">
+          </div>
           <h2><span data-en="See it running, today." data-ml="ഇന്നു തന്നെ ഇതു പ്രവർത്തിക്കുന്നതു കാണൂ.">ഇന്നു തന്നെ ഇതു പ്രവർത്തിക്കുന്നതു കാണൂ.</span></h2>
-          <p class="lede"><span data-en="The best way to understand [[PRODUCT_NAME]] is to open it." data-ml="[[PRODUCT_NAME]] മനസ്സിലാക്കാനുള്ള ഏറ്റവും നല്ല വഴി അതു തുറന്നു നോക്കുകയാണ്.">[[PRODUCT_NAME]] മനസ്സിലാക്കാനുള്ള ഏറ്റവും നല്ല വഴി അതു തുറന്നു നോക്കുകയാണ്.</span></p>
+          <p class="lede"><span data-en="The best way to understand SabhaConnect is to open it." data-ml="SabhaConnect മനസ്സിലാക്കാനുള്ള ഏറ്റവും നല്ല വഴി അതു തുറന്നു നോക്കുകയാണ്.">SabhaConnect മനസ്സിലാക്കാനുള്ള ഏറ്റവും നല്ല വഴി അതു തുറന്നു നോക്കുകയാണ്.</span></p>
           <div class="btn-row">
             <a class="btn btn-primary" href="[[DEMO_URL]]"><span data-en="Try the live demo" data-ml="ലൈവ് ഡെമോ പരീക്ഷിക്കൂ">ലൈവ് ഡെമോ പരീക്ഷിക്കൂ</span> →</a>
             <a class="btn btn-secondary btn-on-dark" href="#contact-form"><span data-en="Book a demo" data-ml="ഡെമോ ബുക്ക് ചെയ്യൂ">ഡെമോ ബുക്ക് ചെയ്യൂ</span></a>
@@ -576,13 +612,13 @@ footer.site-footer{ background:var(--ink); color:rgba(250,247,240,.85); padding:
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <div class="product-name" style="font-size:20px">[[PRODUCT_NAME]]</div>
+        <div class="product-name" style="font-size:20px">SabhaConnect</div>
         <div class="maker-mark"><span data-en="Built by" data-ml="നിർമ്മിച്ചത്">നിർമ്മിച്ചത്</span> <a href="https://theblinkgrid.com" rel="noopener">Blinkgrid</a></div>
       </div>
       <p class="footer-note"><span data-en="Member prayer and scripture are never paywalled — always free, for every member, in every language." data-ml="അംഗങ്ങളുടെ പ്രാർത്ഥനയും തിരുവെഴുത്തും ഒരിക്കലും പണമടച്ചു മാത്രം ലഭിക്കുന്നതല്ല — എല്ലാ അംഗത്തിനും, എല്ലാ ഭാഷയിലും, എപ്പോഴും സൗജന്യം.">അംഗങ്ങളുടെ പ്രാർത്ഥനയും തിരുവെഴുത്തും ഒരിക്കലും പണമടച്ചു മാത്രം ലഭിക്കുന്നതല്ല — എല്ലാ അംഗത്തിനും, എല്ലാ ഭാഷയിലും, എപ്പോഴും സൗജന്യം.</span></p>
     </div>
     <div class="footer-bottom">
-      <span data-en="© 2026 [[PRODUCT_NAME]]. All rights reserved." data-ml="© 2026 [[PRODUCT_NAME]]. എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം.">© 2026 [[PRODUCT_NAME]]. എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം.</span>
+      <span data-en="© 2026 SabhaConnect. All rights reserved." data-ml="© 2026 SabhaConnect. എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം.">© 2026 SabhaConnect. എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം.</span>
     </div>
   </div>
 </footer>
@@ -667,6 +703,27 @@ footer.site-footer{ background:var(--ink); color:rgba(250,247,240,.85); padding:
         window.speechSynthesis.speak(utter);
       });
     }
+  }
+
+  /* ---- Gentle reveal-on-scroll (vanilla IntersectionObserver, no library) ---- */
+  var revealEls = document.querySelectorAll(".reveal");
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (revealEls.length && !reduceMotion){
+    if ("IntersectionObserver" in window){
+      var io = new IntersectionObserver(function(entries){
+        for (var i = 0; i < entries.length; i++){
+          if (entries[i].isIntersecting){
+            entries[i].target.classList.add("is-visible");
+            io.unobserve(entries[i].target);
+          }
+        }
+      }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+      for (var r = 0; r < revealEls.length; r++){ io.observe(revealEls[r]); }
+    } else {
+      for (var r2 = 0; r2 < revealEls.length; r2++){ revealEls[r2].classList.add("is-visible"); }
+    }
+  } else {
+    for (var r3 = 0; r3 < revealEls.length; r3++){ revealEls[r3].classList.add("is-visible"); }
   }
 })();
 </script>

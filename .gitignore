@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# Build-time source data (spreadsheets etc.) — never committed to history
+*.xlsx
+/data-source/
