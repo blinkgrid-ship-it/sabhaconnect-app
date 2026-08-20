@@ -259,7 +259,7 @@ export const seed: Db = {
     { id: 'gh-q4', churchId: GHS, prompt: { en: 'What are you most afraid to bring honestly before God?', ml: 'ദൈവത്തിന്റെ മുമ്പിൽ സത്യസന്ധമായി കൊണ്ടുവരാൻ നീ ഏറ്റവും ഭയപ്പെടുന്നത് എന്ത്?' }, day: '2026-08-13', sourceSermonId: 'gh-s1', status: 'pending_review' },
     { id: 'gh-q5', churchId: GHS, prompt: { en: 'When have you felt truly unseen — and how might God have been present there?', ml: 'എപ്പോഴെങ്കിലും നീ യഥാർത്ഥത്തിൽ കാണപ്പെടാത്തവളാണ് എന്നു തോന്നിയോ — അവിടെ ദൈവം സന്നിഹിതനായിരുന്നത് എങ്ങനെ?' }, day: '2026-08-14', sourceSermonId: 'gh-s2', status: 'approved' },
     { id: 'gh-q6', churchId: GHS, prompt: { en: 'Who in your life might need you to notice them the way God noticed Hagar?', ml: 'ദൈവം ഹാഗാറിനെ ശ്രദ്ധിച്ചതുപോലെ, നിന്റെ ജീവിതത്തിൽ ആരെയാണ് നീ ശ്രദ്ധിക്കേണ്ടത്?' }, day: '2026-08-15', sourceSermonId: 'gh-s2', status: 'approved' },
-    { id: 'gh-q7', churchId: GHS, prompt: { en: 'What name would you give God based on how He has met you this week?', ml: 'ഈ ആഴ്ച ദൈവം നിന്നെ കണ്ടുമുട്ടിയ വിധം അനുസരിച്ച്, നീ അവനു എന്തു പേരു നൽകും?' }, day: '2026-08-16', sourceSermonId: 'gh-s2', status: 'approved' },
+    { id: 'gh-q7', churchId: GHS, prompt: { en: "In the light of this week's experiences, by what name will you call God?", ml: 'ഈ ആഴ്ചയിലെ അനുഭവങ്ങളുടെ വെളിച്ചത്തിൽ, ദൈവത്തെ നിങ്ങൾ ഏതു പേരിൽ വിളിക്കും?' }, day: '2026-08-16', sourceSermonId: 'gh-s2', status: 'approved' },
     { id: 'kf-q1', churchId: KF, prompt: { en: 'How has God shown His steadfast love to you this week?', ml: 'ഈ ആഴ്ച ദൈവം തന്റെ സ്ഥിരമായ സ്നേഹം നിനക്കു എങ്ങനെ കാണിച്ചു?' }, day: '2026-08-12', status: 'approved' },
   ],
 
@@ -270,8 +270,8 @@ export const seed: Db = {
       churchId: GHS,
       author: 'Pastor Thomas Eapen',
       body: {
-        en: "This series has been on my heart for months. So many of us carry a name we never chose — words spoken over us by people who didn't know what they were doing. I wanted us to sit with two people in Genesis who walked away from an encounter with God carrying a new name instead. My prayer is that by Sunday, some of you leave this room the same way.",
-        ml: 'ഈ പരമ്പര മാസങ്ങളായി എന്റെ ഹൃദയത്തിലുണ്ടായിരുന്നു. നമ്മളിൽ പലരും തിരഞ്ഞെടുക്കാത്ത ഒരു പേരു വഹിക്കുന്നു — എന്തു ചെയ്യുന്നു എന്നറിയാതെ മറ്റുള്ളവർ പറഞ്ഞ വാക്കുകൾ. ഉല്പത്തിയിലെ രണ്ടു പേരോടൊപ്പം ഇരിക്കാൻ ഞാൻ ആഗ്രഹിച്ചു — ദൈവവുമായുള്ള കൂടിക്കാഴ്ചയിൽനിന്നു പുതിയ പേരുമായി മടങ്ങിയവർ. ഞായറാഴ്ചയോടെ, നിങ്ങളിൽ ചിലരും അതുപോലെ ഈ മുറി വിട്ടുപോകട്ടെ എന്നു ഞാൻ പ്രാർത്ഥിക്കുന്നു.',
+        en: 'This is a thought that has been on my heart for months. So many of us live carrying names we never chose — labels others placed on us. This week I want to turn your attention to two people in the book of Genesis who came away from an encounter with God with a new identity and a new name — Abram, who became Abraham, and Jacob, who became Israel. By this Sunday, my prayer is that each of you, too, may go forward having received that same fresh hope and blessing.',
+        ml: 'മാസങ്ങളായി എന്റെ മനസ്സിൽ നിറഞ്ഞുനിന്ന ഒരു ചിന്തയാണിത്. നമ്മളിൽ പലരും, നാം ഒരിക്കലും ആഗ്രഹിക്കാത്ത — മറ്റുള്ളവർ നമുക്കു ചാർത്തിത്തന്ന — പേരുകളും വിശേഷണങ്ങളും പേറിയാണ് ജീവിക്കുന്നത്. എന്നാൽ ദൈവവുമായുള്ള കൂടിക്കാഴ്ചയിൽ ഒരു പുതിയ സ്വത്വവും പുതിയ പേരും സ്വീകരിച്ചു മടങ്ങിയ ഉല്പത്തി പുസ്തകത്തിലെ രണ്ടു വ്യക്തികളിലേക്ക് — അബ്രാം അബ്രാഹാം ആയതും, യാക്കോബ് യിസ്രായേൽ ആയതും — ഈ ആഴ്ച നിങ്ങളുടെ ശ്രദ്ധ ക്ഷണിക്കാൻ ഞാൻ ആഗ്രഹിക്കുന്നു. ഈ ഞായറാഴ്ചയോടെ, നിങ്ങളിൽ ഓരോരുത്തർക്കും അപ്രകാരം ഒരു പുതിയ പ്രത്യാശയും അനുഗ്രഹവും പ്രാപിച്ചു മുന്നോട്ടു പോകാൻ കഴിയട്ടെ എന്നു ഞാൻ പ്രാർത്ഥിക്കുന്നു.',
       },
       isPastor: true,
     },
